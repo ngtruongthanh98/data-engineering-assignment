@@ -1,4 +1,4 @@
-### Image pull
+### Pull msql server image
 
 ```
 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest
