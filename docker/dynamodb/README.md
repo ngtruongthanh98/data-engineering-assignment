@@ -1,7 +1,7 @@
 ### Run container Dynamodb
 
-`cd docker`
-`cd dynamodb`
+`cd docker` \
+`cd dynamodb` \
 `docker compose up -d`
 
 ### Create network
@@ -16,9 +16,9 @@
 
 `aws configure`
 
-AWS Access Key ID[None]: `Aa123456!`
-AWS Secret Access Key[None]: `Aa123456!`
-Default region name[None]: `ap-southeast-1`
+AWS Access Key ID[None]: `Aa123456!` \
+AWS Secret Access Key[None]: `Aa123456!` \
+Default region name[None]: `ap-southeast-1` \
 Default output format[None]: `json`
 
 Or you can change this information at hidden file "/home/.asw" (MacOS, Linux)

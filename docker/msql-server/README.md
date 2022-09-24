@@ -26,19 +26,19 @@ docker exec -it sql2 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Aa123456
 
 ### Import data files
 
-`USE [master] `
-`GO`
-`CREATE DATABASE production ON `
-`( FILENAME = N'/app/AdventureWorks2008R2_Data.mdf'), `
-`( FILENAME = N'/app/AdventureWorks2008R2_log.LDF' ) `
-`FOR ATTACH ;`
+`USE [master] ` \
+`GO` \
+`CREATE DATABASE production ON ` \
+`( FILENAME = N'/app/AdventureWorks2008R2_Data.mdf'), ` \
+`( FILENAME = N'/app/AdventureWorks2008R2_log.LDF' ) ` \
+`FOR ATTACH ;` \
 `GO`
 
 ---
 
 ### Grant file access
 
-`cd /home/Desktop/Docker-DE `
+`cd /home/Desktop/Docker-DE ` \
 ` sudo chmod 0777 AdventureWorks2008R2_*`
 
 ### Make sure that msql server container is running
