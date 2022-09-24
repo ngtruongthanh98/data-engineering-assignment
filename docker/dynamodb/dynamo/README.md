@@ -39,7 +39,7 @@ Add your profile name:
 
 ![DynamoDB Table List](../../images/dynamodb-show-table-list.png "Table List")
 
-### Create table USER
+### Create table USERS
 
 `aws dynamodb create-table --table-name USERS --attribute-definitions AttributeName=USER_ID,AttributeType=S --key-schema AttributeName=USER_ID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --endpoint-url=http://127.0.0.1:8000`
 
@@ -57,3 +57,7 @@ Show table:
   `sam local invoke dynamoOps --event events/event.json --docker-network lambda-local`
 
 ![DynamoDB Invoke Local Lambda](../../images/dynamodb-invoke-local-lambda.png "DynamoDB Invoke Local Lambda")
+
+### Scan table USERS
+
+`aws dynamodb scan --table-name USERS --endpoint-url http://127.0.0.1:8000 `
