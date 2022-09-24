@@ -31,22 +31,22 @@ Add your profile name:
 
 `aws configure list`
 
-![DynamoDB Configure List](../../images/dynamodb-cofig-list.png "configure list")
+![DynamoDB Configure List](../../../images/dynamodb-cofig-list.png "configure list")
 
 ### Show Dynamo Tables:
 
 `aws dynamodb list-tables --endpoint http://127.0.0.1:8000`
 
-![DynamoDB Table List](../../images/dynamodb-show-table-list.png "Table List")
+![DynamoDB Table List](../../../images/dynamodb-show-table-list.png "Table List")
 
 ### Create table USERS
 
 `aws dynamodb create-table --table-name USERS --attribute-definitions AttributeName=USER_ID,AttributeType=S --key-schema AttributeName=USER_ID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --endpoint-url=http://127.0.0.1:8000`
 
-![DynamoDB Create Table USER](../../images/dynamodb-create-table-user.png "Create Table")
+![DynamoDB Create Table USER](../../../images/dynamodb-create-table-user.png "Create Table")
 
 Show table:
-![DynamoDB Create Table USER](../../images/dynamodb-create-table-user-2.png "Create Table")
+![DynamoDB Create Table USER](../../../images/dynamodb-create-table-user-2.png "Create Table")
 
 ### Invoke a local Lambda function in the docker network
 
@@ -56,7 +56,7 @@ Show table:
 - Run the following command:
   `sam local invoke dynamoOps --event events/event.json --docker-network lambda-local`
 
-![DynamoDB Invoke Local Lambda](../../images/dynamodb-invoke-local-lambda.png "DynamoDB Invoke Local Lambda")
+![DynamoDB Invoke Local Lambda](../../../images/dynamodb-invoke-local-lambda.png "DynamoDB Invoke Local Lambda")
 
 ### Scan table USERS
 
