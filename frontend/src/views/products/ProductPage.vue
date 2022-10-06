@@ -1,6 +1,7 @@
 <template>
-  <div class="home">
+  <div class="product-page">
     <header-component />
+    <h1>Products</h1>
   </div>
 </template>
 
@@ -8,7 +9,7 @@
 import HeaderComponent from "@/components/Header/HeaderComponent";
 
 export default {
-  name: "HomePage",
+  name: "ProductPage",
   data: function () {
     return {};
   },
@@ -19,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
+.product-page {
   color: $color-primary;
 }
 </style>

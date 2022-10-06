@@ -1,21 +1,23 @@
 <template>
   <el-row class="header-component">
-    <el-col :span="4" class="navbar__logo-box">
-      <img src="@/assets/aws_logo.png" alt="" class="navbar__logo" />
+    <el-col :span="8" class="navbar__logo-box">
+      <img
+        src="@/assets/aws_logo.png"
+        alt=""
+        class="navbar__logo"
+        @click="onClickLogo"
+      />
     </el-col>
-    <el-col :span="20" class="navbar__menu-box">
+    <el-col v-if="isShowSearchBar" :span="8" class="navbar_search-box">
+      <search-input-component />
+    </el-col>
+    <el-col :span="8" class="navbar__menu-box">
       <ul class="el-menu el-menu--horizontal navbar__menu">
         <li class="el-menu-item">
           <router-link to="/">Home</router-link>
         </li>
         <li class="el-menu-item">
-          <router-link to="/flashcard-game">Flashcard</router-link>
-        </li>
-        <li class="el-menu-item">
-          <router-link to="/flashcard-collection">My Collection</router-link>
-        </li>
-        <li class="el-menu-item">
-          <router-link to="/create-flashcard">Create Flashcard</router-link>
+          <router-link to="/products">Products</router-link>
         </li>
         <li class="el-menu-item">
           <el-dropdown trigger="click" v-on:command="handleNavDropdownCommand">
@@ -38,10 +40,21 @@
     </el-col>
   </el-row>
 </template>
+
 <script>
+import SearchInputComponent from "../SearchInput/SearchInputComponent.vue";
 export default {
   data() {
     return {};
+  },
+  props: {
+    isShowSearchBar: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  components: {
+    SearchInputComponent,
   },
   methods: {
     handleNavDropdownCommand: function (command) {
@@ -56,6 +69,12 @@ export default {
           }.bind(this)
         );
       }
+    },
+    goTo(route) {
+      this.$router.push({ name: route });
+    },
+    onClickLogo() {
+      this.goTo("home");
     },
   },
 };
@@ -72,8 +91,14 @@ export default {
 .navbar__logo {
   display: block;
   height: 60px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 48px;
+  cursor: pointer;
+}
+.navbar_search-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 60px;
 }
 .navbar__menu-box {
   background-color: #ee4d2d;
@@ -83,6 +108,7 @@ export default {
   background-color: #ee4d2d;
   box-shadow: none;
   border-bottom: unset;
+  margin-right: 28px;
 
   .el-menu-item {
     color: #fff;

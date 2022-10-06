@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/Header/HeaderComponent.vue";
+import HeaderComponent from "@/components/Header/HeaderComponent";
 
 export default {
   name: "UserAccountPage",
