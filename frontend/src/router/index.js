@@ -5,7 +5,7 @@ import LoginPage from "../views/auth/LoginPage";
 import RegisterPage from "../views/auth/RegisterPage";
 import ForgotPasswordPage from "../views/forgot-password/ForgotPasswordPage";
 import ProductPage from "../views/products/ProductPage";
-import ProductDetailPage from "../views/products/ProductDetail";
+import ProductDetailPage from "../views/products/ProductDetailPage";
 import AccountPage from "../views/user/AccountPage";
 
 Vue.use(VueRouter);
