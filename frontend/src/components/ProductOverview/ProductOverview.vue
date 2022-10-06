@@ -43,12 +43,28 @@
         <div class="information-box">
           <div class="row">
             <div class="col">Color</div>
-            <div class="col">Red</div>
+            <div class="col">
+              <div class="item-group">
+                <item-tag
+                  v-for="(color, index) in colorList"
+                  :key="index"
+                  :content="color"
+                />
+              </div>
+            </div>
           </div>
 
           <div class="row">
             <div class="col">Size</div>
-            <div class="col">M</div>
+            <div class="col">
+              <div class="item-group">
+                <item-tag
+                  v-for="(size, index) in sizeList"
+                  :key="index"
+                  :content="size"
+                />
+              </div>
+            </div>
           </div>
 
           <div class="row">
@@ -77,11 +93,18 @@
 </template>
 
 <script>
+import ItemTag from "@/components/ItemTag/ItemTag";
+
 export default {
   data: function () {
     return {
       ratingValue: 4.9,
+      colorList: ["Red", "Blue", "Yellow", "Green"],
+      sizeList: ["XS", "S", "M", "L", "XL"],
     };
+  },
+  components: {
+    ItemTag,
   },
 };
 </script>
@@ -122,7 +145,7 @@ export default {
 
       .rating-box {
         .rating {
-          color: red;
+          color: #ee4d2d;
           display: flex;
           align-items: center;
 
@@ -144,12 +167,18 @@ export default {
         margin-top: 24px;
         .row {
           display: grid;
-          grid-template-columns: 5fr 5fr;
+          grid-template-columns: 200px 5fr;
+          align-items: center;
           width: 300px;
           padding: 12px 0;
 
           .col {
             text-align: start;
+
+            .item-group {
+              display: flex;
+              gap: 10px;
+            }
           }
         }
       }
