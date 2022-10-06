@@ -39,6 +39,38 @@
             </div>
           </div>
         </div>
+
+        <div class="information-box">
+          <div class="row">
+            <div class="col">Color</div>
+            <div class="col">Red</div>
+          </div>
+
+          <div class="row">
+            <div class="col">Size</div>
+            <div class="col">M</div>
+          </div>
+
+          <div class="row">
+            <div class="col">Style</div>
+            <div class="col">Unknown</div>
+          </div>
+
+          <div class="row">
+            <div class="col">Quantity</div>
+            <div class="col">5000</div>
+          </div>
+
+          <div class="row">
+            <div class="col">Sell Start Date</div>
+            <div class="col">14/5/2014</div>
+          </div>
+
+          <div class="row">
+            <div class="col">Sell Start End</div>
+            <div class="col">None</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -105,6 +137,20 @@ export default {
 
         .price {
           font-size: 24px;
+        }
+      }
+
+      .information-box {
+        margin-top: 24px;
+        .row {
+          display: grid;
+          grid-template-columns: 5fr 5fr;
+          width: 300px;
+          padding: 12px 0;
+
+          .col {
+            text-align: start;
+          }
         }
       }
     }

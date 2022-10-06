@@ -24,6 +24,10 @@
           <div class="col-1">Stock</div>
           <div class="col-2">1499</div>
         </div>
+        <div class="content-row">
+          <div class="col-1">Weight</div>
+          <div class="col-2">200 gram</div>
+        </div>
       </div>
 
       <div class="description">
