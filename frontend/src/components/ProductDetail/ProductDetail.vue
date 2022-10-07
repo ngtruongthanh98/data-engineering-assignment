@@ -41,20 +41,31 @@
         </div>
       </div>
 
-      <div class="description">
-        <div class="description-title">Product Description</div>
-        <p>THÔNG TIN XUẤT BẢN:</p>
-        <p>Tác giả: Shannon Thomas, LCSW</p>
-        <p>Dịch giả: Trương Tuấn</p>
-        <p>Giá bìa: 169,000đ</p>
-        <p>Kích thước khổ:13x20,5</p>
-        <p>Số trang: 328.</p>
-        <p>Mã EAN: 8936066692298</p>
-        <p>NXB liên kết:NXB Dân Trí</p>
-        <p>
-          Sách do Công ty TNHH Văn hóa và Truyền thông 1980 BOOKS ấn hành quý 1
-          năm 2022
-        </p>
+      <div class="documentation">
+        <div class="documentation-title">Product Documentation</div>
+
+        <div class="content">
+          <div class="content-row">
+            <div class="col-1">Title</div>
+            <div class="col-2">Here is a title</div>
+          </div>
+          <div class="content-row">
+            <div class="col-1">Document Level</div>
+            <div class="col-2">High</div>
+          </div>
+          <div class="content-row">
+            <div class="col-1">Owner</div>
+            <div class="col-2">Mr. Brown</div>
+          </div>
+          <div class="content-row">
+            <div class="col-1">Status</div>
+            <div class="col-2">Completed</div>
+          </div>
+          <div class="content-row">
+            <div class="col-1">Document Summary</div>
+            <div class="col-2">Here is a summary for the document</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -71,6 +82,7 @@ export default {};
   &-body {
     background-color: white;
     text-align: start;
+    padding-bottom: 12px;
 
     .title {
       font-size: 18px;
@@ -95,12 +107,34 @@ export default {};
       }
     }
 
-    .description {
-      padding: 24px;
+    .documentation {
+      padding-top: 24px;
 
-      .description-title {
+      .documentation-title {
         font-size: 18px;
+        margin-left: 24px;
+        margin-right: 24px;
+        padding-top: 24px;
         padding-bottom: 24px;
+
+        border-top: 1px solid rgba(0, 0, 0, 0.09);
+      }
+
+      .content {
+        &-row {
+          display: grid;
+          grid-template-columns: 10fr 25fr;
+          padding: 12px 24px;
+
+          .el-breadcrumb__item {
+            font-size: 16px;
+          }
+
+          .col-1,
+          .col-2 {
+            text-align: left;
+          }
+        }
       }
     }
   }
