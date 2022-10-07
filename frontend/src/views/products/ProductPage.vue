@@ -62,20 +62,21 @@ export default {
   &-body {
     margin: 0px 200px 0px 200px;
 
-    background-color: azure;
-
     .category-container {
       display: grid;
       grid-auto-flow: column dense; /* column flow with "dense" to fill all the cells */
       grid-template-rows: 150px 150px; /* 2 rows */
-      grid-auto-columns: 100px;
+      grid-auto-columns: 120px;
       justify-content: center;
 
       .category-item {
         transition: opacity 0.2s ease;
-        border-right: 1px solid rgba(0, 0, 0, 0.05);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        width: 100px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+
+        &:hover {
+          border: 2px solid rgba(0, 0, 0, 0.05);
+          cursor: pointer;
+        }
 
         .image {
           width: 100px;
