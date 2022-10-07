@@ -6,7 +6,14 @@
       <div class="content">
         <div class="content-row">
           <div class="col-1">Category</div>
-          <div class="col-2">Category > Sub Category > Product</div>
+          <div class="col-2">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <!-- <el-breadcrumb-item :to="{ path: '/' }">Homepage</el-breadcrumb-item> -->
+              <el-breadcrumb-item>Category</el-breadcrumb-item>
+              <el-breadcrumb-item>Sub Category</el-breadcrumb-item>
+              <el-breadcrumb-item>Product</el-breadcrumb-item>
+            </el-breadcrumb>
+          </div>
         </div>
         <div class="content-row">
           <div class="col-1">Brand</div>
@@ -76,6 +83,10 @@ export default {};
         display: grid;
         grid-template-columns: 10fr 25fr;
         padding: 12px 24px;
+
+        .el-breadcrumb__item {
+          font-size: 16px;
+        }
 
         .col-1,
         .col-2 {

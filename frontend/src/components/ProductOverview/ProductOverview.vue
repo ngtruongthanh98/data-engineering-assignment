@@ -1,6 +1,13 @@
 <template>
   <div class="product-overview">
-    <div class="path">Category > Sub Category > Product</div>
+    <div class="path">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">Homepage</el-breadcrumb-item>
+        <el-breadcrumb-item>Category</el-breadcrumb-item>
+        <el-breadcrumb-item>Sub Category</el-breadcrumb-item>
+        <el-breadcrumb-item>Product</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
 
     <div class="product-overview-body">
       <div class="image-box">
