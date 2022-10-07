@@ -39,6 +39,14 @@
             </div>
           </div>
         </div>
+
+        <el-pagination
+          class="pagination-box"
+          small
+          layout="prev, pager, next"
+          :total="50"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -154,7 +162,8 @@ export default {
 
       &-item {
         display: flex;
-        padding: 1rem 0 1rem 1.25rem;
+        padding: 1rem 1rem 1rem 1.25rem;
+        margin-right: 1rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 
         .user-avatar {
@@ -174,6 +183,28 @@ export default {
 
           .comment {
             margin-top: 12px;
+          }
+        }
+      }
+      .pagination-box {
+        text-align: end;
+        margin-top: 24px;
+        margin-right: 1rem;
+
+        .el-pager li.active {
+          color: #d0011b;
+        }
+
+        .el-pager li {
+          &:hover {
+            color: #d0011b;
+          }
+        }
+
+        .btn-prev,
+        .btn-next {
+          &:hover {
+            color: #d0011b;
           }
         }
       }
