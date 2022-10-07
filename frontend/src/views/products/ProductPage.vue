@@ -5,32 +5,11 @@
 
     <div class="product-page-body">
       <div class="category-container">
-        <!-- <div class="row">
-          <div class="col">
-            <div class="category-item">
-              <img
-                src="https://cf.shopee.vn/file/687f3967b7c2fe6a134a2c11894eea4b_tn"
-                alt=""
-                class="image"
-              />
-              <div class="title">Men Clothes</div>
-            </div>
-
-            <div class="category-item">
-              <img
-                src="https://cf.shopee.vn/file/687f3967b7c2fe6a134a2c11894eea4b_tn"
-                alt=""
-                class="image"
-              />
-              <div class="title">Men Clothes</div>
-            </div>
-          </div>
-        </div> -->
-
         <div
           v-for="(categoryItem, index) in categoryList"
           :key="index"
           class="category-item"
+          @click="onHandleClick(categoryItem.link)"
         >
           <img :src="categoryItem.image" alt="" class="image" />
           <div class="title">{{ categoryItem.title }}</div>
@@ -53,6 +32,11 @@ export default {
   },
   components: {
     HeaderComponent,
+  },
+  methods: {
+    onHandleClick(link) {
+      this.$router.push(`/${link}`);
+    },
   },
 };
 </script>
