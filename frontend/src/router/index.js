@@ -7,6 +7,7 @@ import ForgotPasswordPage from "../views/forgot-password/ForgotPasswordPage";
 import ProductPage from "../views/products/ProductPage";
 import ProductDetailPage from "../views/products/ProductDetailPage";
 import AccountPage from "../views/user/AccountPage";
+import TransactionDetailPage from "../views/products/TransactionDetailPage";
 
 Vue.use(VueRouter);
 
@@ -22,9 +23,14 @@ const routes = [
     component: ProductPage,
   },
   {
-    path: "/product:productId",
+    path: "/product/:productId",
     name: "productDetail",
     component: ProductDetailPage,
+  },
+  {
+    path: "/transaction/:transactionId",
+    name: "transactionDetail",
+    component: TransactionDetailPage,
   },
   {
     path: "/user/account",

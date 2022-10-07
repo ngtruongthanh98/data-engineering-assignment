@@ -15,7 +15,7 @@ import ProductRating from "@/components/ProductRating/ProductRating";
 
 export default {
   name: "ProductDetailPage",
-  data: function () {},
+  // data: function () {},
   components: {
     HeaderComponent,
     ProductOverview,

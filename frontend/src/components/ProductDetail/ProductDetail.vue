@@ -24,6 +24,10 @@
           <div class="col-2">English</div>
         </div>
         <div class="content-row">
+          <div class="col-1">Culture</div>
+          <div class="col-2">English</div>
+        </div>
+        <div class="content-row">
           <div class="col-1">Plublishing Company</div>
           <div class="col-2">1980BOOKS</div>
         </div>

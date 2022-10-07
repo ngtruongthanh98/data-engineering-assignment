@@ -93,6 +93,15 @@
             <div class="col">Sell Start End</div>
             <div class="col">None</div>
           </div>
+
+          <div class="button-row">
+            <el-button
+              type="primary"
+              class="direction-btn"
+              @click="onClickTransactionDetail"
+              >Transactions</el-button
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -112,6 +121,17 @@ export default {
   },
   components: {
     ItemTag,
+  },
+  methods: {
+    onClickTransactionDetail() {
+      console.log("Clicked");
+
+      const transaction = {
+        id: 2424,
+      };
+
+      this.$router.push(`/transaction/${transaction.id}`);
+    },
   },
 };
 </script>
@@ -186,6 +206,21 @@ export default {
               display: flex;
               gap: 10px;
             }
+          }
+        }
+
+        .button-row {
+          width: 100%;
+          text-align: right;
+        }
+
+        .direction-btn {
+          margin-top: 24px;
+          background-color: #ee4d2d;
+          border-color: #ee4d2d;
+
+          &:hover {
+            background-color: #ff5a3d;
           }
         }
       }
