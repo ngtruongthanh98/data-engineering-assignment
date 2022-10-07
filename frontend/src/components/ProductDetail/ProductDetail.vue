@@ -59,7 +59,7 @@ export default {};
 
 <style lang="scss">
 .product-detail {
-  padding: 24px;
+  padding: 24px 200px 0px 200px;
 
   &-body {
     background-color: white;
@@ -74,7 +74,7 @@ export default {};
     .content {
       &-row {
         display: grid;
-        grid-template-columns: 5fr 25fr;
+        grid-template-columns: 10fr 25fr;
         padding: 12px 24px;
 
         .col-1,

@@ -98,7 +98,7 @@ export default {
 
 <style lang="scss">
 .product-rating {
-  padding: 24px;
+  padding: 24px 200px 0px 200px;
 
   &-body {
     background-color: white;
@@ -142,7 +142,6 @@ export default {
         .custom-item-tag {
           height: 2rem;
           line-height: 2rem;
-          min-width: 6.25rem;
           border-radius: 2px;
           margin-bottom: 0.3125rem;
           margin-top: 0.3125rem;

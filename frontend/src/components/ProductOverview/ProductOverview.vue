@@ -116,7 +116,7 @@ export default {
     margin-bottom: 24px;
   }
 
-  padding: 24px;
+  padding: 24px 200px 0px 200px;
 
   &-body {
     display: flex;
