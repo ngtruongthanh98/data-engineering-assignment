@@ -21,6 +21,10 @@
           <div class="col-2">1980BOOKS</div>
         </div>
         <div class="content-row">
+          <div class="col-1">Year</div>
+          <div class="col-2">2020</div>
+        </div>
+        <div class="content-row">
           <div class="col-1">Stock</div>
           <div class="col-2">1499</div>
         </div>
@@ -62,6 +66,7 @@ export default {};
     text-align: start;
 
     .title {
+      font-size: 18px;
       padding: 24px;
       text-align: start;
     }
@@ -83,6 +88,7 @@ export default {};
       padding: 24px;
 
       .description-title {
+        font-size: 18px;
         padding-bottom: 24px;
       }
     }

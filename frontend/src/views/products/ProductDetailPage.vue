@@ -3,6 +3,7 @@
     <header-component />
     <product-overview />
     <product-detail />
+    <product-rating />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import ProductOverview from "@/components/ProductOverview/ProductOverview";
 import ProductDetail from "@/components/ProductDetail/ProductDetail";
+import ProductRating from "@/components/ProductRating/ProductRating";
 
 export default {
   name: "ProductDetailPage",
@@ -18,6 +20,7 @@ export default {
     HeaderComponent,
     ProductOverview,
     ProductDetail,
+    ProductRating,
   },
 };
 </script>
