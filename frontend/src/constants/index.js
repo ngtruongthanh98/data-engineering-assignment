@@ -100,3 +100,27 @@ export const categoryList = [
     link: "books-and-stationery",
   },
 ];
+
+export const MEN_CLOTHES = [
+  "Jackets, Coats & Vests",
+  "Suit Jackets & Blazers",
+  "Hoodies & Sweatshirts",
+  "Jeans",
+  "Pants/Suits",
+  "Shorts",
+  "Tops",
+  "Tanks",
+  "Innerwear & Underwear",
+  "Sleepwear",
+  "Sets",
+  "Socks",
+  "Traditional Wear",
+  "Costumes",
+  "Occupational Attire",
+  "Others",
+  "Men Jewelries",
+  "Eyewear",
+  "Belts",
+  "Neckties, Bow Ties & Cravats",
+  "Additional Accessories",
+];
