@@ -17,7 +17,7 @@
           <router-link to="/">Home</router-link>
         </li>
         <li class="el-menu-item">
-          <router-link to="/products">Products</router-link>
+          <router-link to="/product">Products</router-link>
         </li>
         <li class="el-menu-item">
           <el-dropdown trigger="click" v-on:command="handleNavDropdownCommand">
