@@ -234,3 +234,55 @@ export const CAMERAS = [
   "Camera Accessories",
   "Drones",
 ];
+
+export const WATCHES = [
+  "Men Watches",
+  "Women Watches",
+  "Set & Couple Watches",
+  "Kid Watches",
+  "Watches Accessories",
+  "Others",
+];
+
+export const MEN_SHOES = [
+  "Boots",
+  "Sneakers",
+  "Slip Ons & Mules",
+  "Loafers & Boat Shoes",
+  "Oxfare & Accessories",
+  "Others",
+];
+
+export const SPORT_AND_OUTDOOR = [
+  "Luggage",
+  "Travel Bags",
+  "Travel Accessories",
+  "Sports & Outdoor Recreation Equipments",
+  "Sports & Outdoor Apparels",
+  "Sports & Outdoor Accessories",
+  "Others",
+];
+
+export const HEALTH = [
+  "Medical Supplies",
+  "Insect Reoellents",
+  "Food Supplement",
+  "Adult Diapers & Incontinence",
+  "Beauty Supplements",
+  "Sexual Wellness",
+  "Massage & Therapy Devices",
+  "Others",
+];
+
+export const WOMEN_BAGS = [
+  "Backpacks",
+  "Laptop Bags",
+  "Clutches & Wristlets",
+  "Waist Bags & Chest Bags",
+  "Tote Bags",
+  "Top-handle Bags",
+  "Crossbody & Shoulder Bags",
+  "Wallets",
+  "Bag Accessories",
+  "Others",
+];
