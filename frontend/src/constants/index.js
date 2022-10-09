@@ -286,3 +286,104 @@ export const WOMEN_BAGS = [
   "Bag Accessories",
   "Others",
 ];
+
+export const GROCERY = [
+  "Snacks",
+  "Convenience / Ready-to-eat",
+  "Food Staples",
+  "Cooking Essentials",
+  "Baking Needs",
+  "Dairy & Eggs",
+  "Beverages",
+  "Breakfast Cereals & Spread",
+  "Bakery",
+  "Alcoholic Beverages",
+  "Gift Set & Hampers",
+  "Fresh & Frozen Food",
+  "Others",
+];
+
+export const HOME_APPLIANCES = [
+  "Kitchen Appliances",
+  "Large Appliance",
+  "Vacuums & Floor care",
+  "Air Conditioners & Fans",
+  "Garment Care",
+  "Blenders, Mixers & Grinders",
+  "Electric Cookers",
+  "Others",
+];
+
+export const AUTOMOTIVE = [
+  "Bike, E-bike",
+  "Motorbike",
+  "Car",
+  "Helmets",
+  "Motorbike Accessories",
+  "Bicycle & E-bike Accessories",
+  "Interior Accessories",
+  "Automotive Oils & Lubes",
+  "Auto Parts & Spares",
+  "Motorbike Spare Parts",
+  "Exterior Accessories",
+  "Automotive Care",
+  "Automotive Services",
+];
+
+export const BEAUTY = [
+  "Skincare",
+  "Bath & Body Care",
+  "Makeup",
+  "Hair Care",
+  "Beauty Tools & Accessories",
+  "Oral Care",
+  "Perfumes & Fragrances",
+  "Men's Care",
+  "Feminine Care",
+  "Beauty Sets & Packages",
+  "Others",
+];
+
+export const WOMEN_SHOES = [
+  "Boots",
+  "Sneakers",
+  "Flats",
+  "Heels",
+  "Wedges",
+  "Flat Sandals & Flip Flops",
+  "Shoe Care & Accessories",
+  "Others",
+];
+
+export const FASHION_ACCESSORIES = [
+  "Rings",
+  "Earrings",
+  "Scarves & Shawls",
+  "Gloves",
+  "Hair Accessories",
+  "Bracelets & Bangles",
+  "Anklets",
+  "Hats & Caps",
+  "Necklaces",
+  "Eyewear",
+  "Investment Precious Metals",
+  "Belts",
+  "Neckties, Bow Ties & Cravats",
+  "Additional Accessories",
+  "Accessories Sets & Packages",
+  "Socks & Stockings",
+  "Umbrella",
+  "Others",
+];
+
+export const BOOKS_AND_STATIONERY = [
+  "Domestic Books",
+  "Foreign Books",
+  "Gift & Wrapping",
+  "Writing & Correction",
+  "School & Office Supplies",
+  "Coloring & Arts",
+  "Notebooks & Paper Products",
+  "Souvenirs",
+  "Music & Media",
+];

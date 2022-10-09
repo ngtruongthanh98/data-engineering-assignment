@@ -2,16 +2,28 @@
 <template>
   <div class="category">
     <header-component />
-    <div>Automotive</div>
+
+    <sub-category-component
+      title="Automotive"
+      :subCategoryList="subCategoryList"
+    />
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
+import SubCategoryComponent from "@/views/category/SubCategoryComponent";
+import { AUTOMOTIVE } from "@/constants";
 
 export default {
+  data() {
+    return {
+      subCategoryList: AUTOMOTIVE,
+    };
+  },
   components: {
     HeaderComponent,
+    SubCategoryComponent,
   },
 };
 </script>

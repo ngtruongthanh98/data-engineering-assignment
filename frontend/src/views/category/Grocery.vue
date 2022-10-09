@@ -2,16 +2,28 @@
 <template>
   <div class="category">
     <header-component />
-    <div>Grocery</div>
+
+    <sub-category-component
+      title="Grocery"
+      :subCategoryList="subCategoryList"
+    />
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
+import SubCategoryComponent from "@/views/category/SubCategoryComponent";
+import { GROCERY } from "@/constants";
 
 export default {
+  data() {
+    return {
+      subCategoryList: GROCERY,
+    };
+  },
   components: {
     HeaderComponent,
+    SubCategoryComponent,
   },
 };
 </script>
