@@ -52,6 +52,7 @@ export default {
   .body {
     font-size: 14px;
     display: flex;
+    margin: 0px 200px 0px 200px;
 
     .sub-category-list {
       width: 20%;
@@ -60,7 +61,7 @@ export default {
     .main {
       width: 80%;
       display: grid;
-      grid-template-columns: repeat(5, 200px);
+      grid-template-columns: repeat(5, 230px);
       gap: 10px;
     }
   }

@@ -65,11 +65,12 @@ export default {
 
 <style lang="scss">
 .product-item {
-  width: 190px;
+  width: 220px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   text-align: start;
   padding: 5px;
   height: fit-content;
+  transition: opacity 0.2s ease;
 
   &:hover {
     cursor: pointer;
@@ -77,8 +78,8 @@ export default {
   }
 
   .product-image {
-    width: 190px;
-    height: 190px;
+    width: 220px;
+    height: 220px;
   }
 
   .product-name {
