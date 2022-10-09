@@ -5,12 +5,26 @@
 
     <div class="body">
       <sub-category-list :title="title" :subCategoryList="subCategoryList" />
+      <div class="main">
+        <product-item />
+        <product-item />
+        <product-item />
+        <product-item />
+        <product-item />
+
+        <product-item />
+        <product-item />
+        <product-item />
+        <product-item />
+        <product-item />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import SubCategoryList from "./SubCategoryList";
+import ProductItem from "./ProductItem";
 
 export default {
   props: {
@@ -25,6 +39,7 @@ export default {
   },
   components: {
     SubCategoryList,
+    ProductItem,
   },
 };
 </script>
@@ -36,6 +51,18 @@ export default {
   }
   .body {
     font-size: 14px;
+    display: flex;
+
+    .sub-category-list {
+      width: 20%;
+    }
+
+    .main {
+      width: 80%;
+      display: grid;
+      grid-template-columns: repeat(5, 200px);
+      gap: 10px;
+    }
   }
 }
 </style>
