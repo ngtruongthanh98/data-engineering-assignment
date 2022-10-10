@@ -86,8 +86,6 @@ export default {
   },
   methods: {
     onClickProductDetail() {
-      console.log("Clicked");
-
       const product = {
         id: 2424,
       };

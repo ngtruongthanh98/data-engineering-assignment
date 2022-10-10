@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="product-item">
+  <div class="product-item" @click="onClickProductItem">
     <img v-if="imageSrc" class="product-image" :src="imageSrc" alt="" />
     <img
       v-else
@@ -58,6 +58,15 @@ export default {
     productLocation: {
       type: String,
       default: "Hanoi",
+    },
+  },
+  methods: {
+    onClickProductItem() {
+      const product = {
+        id: 2424,
+      };
+
+      this.$router.push(`/product/${product.id}`);
     },
   },
 };
