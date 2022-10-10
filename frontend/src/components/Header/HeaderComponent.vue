@@ -19,7 +19,7 @@
         <li class="el-menu-item">
           <router-link to="/product">Products</router-link>
         </li>
-        <li class="el-menu-item">
+        <li class="el-menu-item account-setting-box">
           <el-dropdown trigger="click" v-on:command="handleNavDropdownCommand">
             <span class="el-dropdown-link account-setting"
               >thanhnt26<i class="el-icon-caret-bottom el-icon--right"></i
@@ -82,11 +82,11 @@ export default {
 <style lang="scss" scoped>
 .header-component {
   padding: 10px 0;
-  background-color: #ee4d2d;
+  background: linear-gradient(-180deg, #f53d2d, #f63);
 }
 
 .navbar__logo-box {
-  background-color: #ee4d2d;
+  background-color: transparent;
 }
 .navbar__logo {
   display: block;
@@ -101,11 +101,11 @@ export default {
   height: 60px;
 }
 .navbar__menu-box {
-  background-color: #ee4d2d;
+  background-color: transparent;
 }
 .navbar__menu {
   float: right;
-  background-color: #ee4d2d;
+  background-color: transparent;
   box-shadow: none;
   border-bottom: unset;
   margin-right: 28px;
@@ -114,12 +114,20 @@ export default {
     color: #fff;
 
     &:hover {
-      background-color: #ee4d2d;
+      background-color: transparent;
       color: hsla(0, 0%, 100%, 0.7);
     }
 
     .account-setting {
       color: #fff;
+    }
+  }
+}
+
+.account-setting-box {
+  .account-setting {
+    &:hover {
+      color: hsla(0, 0%, 100%, 0.7);
     }
   }
 }
