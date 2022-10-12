@@ -83,7 +83,7 @@ export default {
 
   &:hover {
     cursor: pointer;
-    border: 1px solid #ee4d2d;
+    border: 1px solid $color-primary;
   }
 
   .product-image {
@@ -109,7 +109,7 @@ export default {
 
   .product-price {
     font-size: 1rem;
-    color: #ee4d2d;
+    color: $color-primary;
     margin: 5px;
   }
 

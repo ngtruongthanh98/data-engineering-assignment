@@ -106,11 +106,11 @@ export default {
     }
     .direction-btn {
       margin-top: 24px;
-      background-color: #ee4d2d;
-      border-color: #ee4d2d;
+      background-color: $color-primary;
+      border-color: $color-primary;
 
       &:hover {
-        background-color: #ff5a3d;
+        background-color: $color-secondary;
       }
     }
   }

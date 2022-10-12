@@ -57,7 +57,7 @@ export default {
     transition: opacity 0.2s ease;
 
     &:hover {
-      color: #ee4d2d;
+      color: $color-primary;
       cursor: pointer;
     }
   }

@@ -123,14 +123,14 @@ export default {
       margin: 24px;
       padding: 24px;
 
-      border: 1px solid #f9ede5;
-      background-color: #fffbf8;
+      border: 1px solid $color-border;
+      background-color: $color-background;
 
       display: grid;
       grid-template-columns: 200px 1fr;
 
       .star-box {
-        color: #d0011b;
+        color: $color-tertiary;
         font-size: 18px;
 
         .star {
@@ -164,7 +164,7 @@ export default {
         display: flex;
         padding: 1rem 1rem 1rem 1.25rem;
         margin-right: 1rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+        border-bottom: 1px solid $color-border-tag;
 
         .user-avatar {
           margin-right: 10px;
@@ -192,19 +192,19 @@ export default {
         margin-right: 1rem;
 
         .el-pager li.active {
-          color: #d0011b;
+          color: $color-tertiary;
         }
 
         .el-pager li {
           &:hover {
-            color: #d0011b;
+            color: $color-tertiary;
           }
         }
 
         .btn-prev,
         .btn-next {
           &:hover {
-            color: #d0011b;
+            color: $color-tertiary;
           }
         }
       }

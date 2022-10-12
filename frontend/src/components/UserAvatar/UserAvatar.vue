@@ -13,7 +13,7 @@ export default {};
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background-color: #f5f5f5;
+  background-color: $color-gray;
 
   display: flex;
   justify-content: center;

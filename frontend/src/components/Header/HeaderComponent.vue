@@ -111,7 +111,7 @@ export default {
   margin-right: 28px;
 
   .el-menu-item {
-    color: #fff;
+    color: $color-white;
 
     &:hover {
       background-color: transparent;
@@ -119,7 +119,7 @@ export default {
     }
 
     .account-setting {
-      color: #fff;
+      color: $color-white;
     }
   }
 }

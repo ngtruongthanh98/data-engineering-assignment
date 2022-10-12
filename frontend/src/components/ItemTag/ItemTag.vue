@@ -17,13 +17,13 @@ export default {
 
 <style lang="scss" scoped>
 .custom-tag {
-  border: 1px solid rgba(0, 0, 0, 0.09);
+  border: 1px solid $color-border-tag;
   padding: 5px 10px;
   cursor: pointer;
 
   &:hover {
-    color: #ee4d2d;
-    border-color: #ee4d2d;
+    color: $color-primary;
+    border-color: $color-primary;
   }
 
   .text {

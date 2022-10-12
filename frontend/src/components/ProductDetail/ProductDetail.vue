@@ -121,7 +121,7 @@ export default {};
         padding-top: 24px;
         padding-bottom: 24px;
 
-        border-top: 1px solid rgba(0, 0, 0, 0.09);
+        border-top: 1px solid $color-border-tag;
       }
 
       .content {
