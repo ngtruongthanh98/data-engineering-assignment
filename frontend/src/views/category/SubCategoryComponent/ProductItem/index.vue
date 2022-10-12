@@ -83,7 +83,7 @@ export default {
 
   &:hover {
     cursor: pointer;
-    border: 2px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid #ee4d2d;
   }
 
   .product-image {
