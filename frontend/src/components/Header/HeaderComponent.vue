@@ -82,7 +82,7 @@ export default {
 <style lang="scss" scoped>
 .header-component {
   padding: 10px 0;
-  background: linear-gradient(-180deg, #f53d2d, #f63);
+  background: $color-header-background;
 }
 
 .navbar__logo-box {

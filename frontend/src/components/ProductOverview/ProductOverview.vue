@@ -150,7 +150,7 @@ export default {
     justify-content: center;
     width: 100%;
 
-    background-color: white;
+    background-color: $color-white;
 
     .image-box {
       padding: 24px;

@@ -84,7 +84,7 @@ export default {};
   padding: 24px 200px 0px 200px;
 
   &-body {
-    background-color: white;
+    background-color: $color-white;
     text-align: start;
     padding-bottom: 12px;
 

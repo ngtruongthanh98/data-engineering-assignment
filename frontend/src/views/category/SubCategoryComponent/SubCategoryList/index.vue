@@ -43,12 +43,12 @@ export default {
     font-size: 16px;
     text-transform: capitalize;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.8);
+    color: $color-border-sub-category;
     height: 3.125rem;
     line-height: 3.125rem;
     font-weight: 700;
     font-size: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid $color-border-sub-category-2;
     margin-bottom: 0.625rem;
   }
 
