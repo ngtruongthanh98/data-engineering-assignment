@@ -4,6 +4,7 @@
     <product-overview />
     <product-detail />
     <product-rating />
+    <copyright />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import HeaderComponent from "@/components/Header/HeaderComponent";
 import ProductOverview from "@/components/ProductOverview/ProductOverview";
 import ProductDetail from "@/components/ProductDetail/ProductDetail";
 import ProductRating from "@/components/ProductRating/ProductRating";
+import Copyright from "@/components/Copyright";
 
 export default {
   name: "ProductDetailPage",
@@ -21,6 +23,7 @@ export default {
     ProductOverview,
     ProductDetail,
     ProductRating,
+    Copyright,
   },
 };
 </script>

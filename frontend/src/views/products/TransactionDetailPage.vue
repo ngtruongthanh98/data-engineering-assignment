@@ -1,7 +1,7 @@
 <template>
   <div class="transaction-page">
     <header-component />
-    <h1>Transaction Table</h1>
+    <div class="title">Transaction Table</div>
 
     <div class="transaction-page-body">
       <el-table :data="tableData" border style="width: 100%">
@@ -35,11 +35,13 @@
         >
       </div>
     </div>
+    <copyright />
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
+import Copyright from "@/components/Copyright";
 
 export default {
   name: "TransactionPage",
@@ -83,6 +85,7 @@ export default {
   },
   components: {
     HeaderComponent,
+    Copyright,
   },
   methods: {
     onClickProductDetail() {
@@ -98,6 +101,11 @@ export default {
 
 <style lang="scss" scoped>
 .transaction-page {
+  .title {
+    padding: 24px;
+    font-size: 24px;
+  }
+
   &-body {
     margin: 24px 200px 24px 200px;
 

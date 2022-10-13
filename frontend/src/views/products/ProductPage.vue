@@ -1,7 +1,7 @@
 <template>
   <div class="product-page">
     <header-component />
-    <h1>Category</h1>
+    <div class="category-title">Category</div>
 
     <div class="product-page-body">
       <div class="category-container">
@@ -16,11 +16,14 @@
         </div>
       </div>
     </div>
+
+    <copyright />
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
+import Copyright from "@/components/Copyright";
 import { categoryList } from "@/constants";
 
 export default {
@@ -32,6 +35,7 @@ export default {
   },
   components: {
     HeaderComponent,
+    Copyright,
   },
   methods: {
     onHandleClick(link) {
@@ -43,6 +47,16 @@ export default {
 
 <style lang="scss" scoped>
 .product-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+
+  .category-title {
+    padding: 24px;
+    font-size: 24px;
+  }
+
   &-body {
     margin: 0px 200px 0px 200px;
 

@@ -168,6 +168,9 @@ export default {
       }
 
       .product-id {
+        .title {
+          padding: 10px 0;
+        }
       }
 
       .rating-box {

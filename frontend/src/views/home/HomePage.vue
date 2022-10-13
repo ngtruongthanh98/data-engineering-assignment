@@ -12,11 +12,14 @@
         <line-chart class="line-chart-1" />
       </div>
     </div>
+
+    <copyright />
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
+import Copyright from "@/components/Copyright";
 import BarChart from "@/components/Chart/BarChart";
 import LineChart from "@/components/Chart/LineChart";
 import PieChart from "@/components/Chart/PieChart";
@@ -31,12 +34,18 @@ export default {
     BarChart,
     LineChart,
     PieChart,
+    Copyright,
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+
   &-body {
     width: 100%;
     display: flex;
