@@ -1,0 +1,56 @@
+{
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "ProductName",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "CategoryName",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "SubcategoryName",
+            "AttributeType": "S"
+        }
+    ],
+    "TableName": "Product",
+    "KeySchema": [
+        {
+            "AttributeName": "ProductName",
+            "KeyType": "HASH"
+        }
+    ],
+    "GlobalSecondaryIndexes": [
+        {
+            "IndexName": "CategoryGlobalIndex",
+            "KeySchema": [
+                {
+                    "AttributeName": "CategoryName",
+                    "KeyType": "HASH"
+                }
+            ],
+            "Projection": {
+                "ProjectionType": "INCLUDE",
+                "NonKeyAttributes": [
+                    "ProductName"
+                ]
+            }
+        },
+        {
+            "IndexName": "SubcategoryGlobalIndex",
+            "KeySchema": [
+                {
+                    "AttributeName": "SubcategoryName",
+                    "KeyType": "HASH"
+                }
+            ],
+            "Projection": {
+                "ProjectionType": "INCLUDE",
+                "NonKeyAttributes": [
+                    "ProductName"
+                ]
+            }
+        }
+    ],
+    "BillingMode": "PAY_PER_REQUEST"
+}
