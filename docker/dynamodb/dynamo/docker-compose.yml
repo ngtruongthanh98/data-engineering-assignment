@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "./docker/dynamodb:/home/dynamodblocal/data"
+      - "./docker/volume"
     working_dir: /home/dynamodblocal
   app-node:
     depends_on:
