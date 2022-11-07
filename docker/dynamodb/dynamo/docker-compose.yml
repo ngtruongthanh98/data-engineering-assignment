@@ -1,13 +1,17 @@
 version: "3.3"
 services:
   dynamodb-local:
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /usr/share/app"
     image: "amazon/dynamodb-local:latest"
     container_name: dynamodb-local
     ports:
       - "8000:8000"
     volumes:
-      - db:/share
+      - "my_test_volume:/usr/share/app"
 volumes:
-  db:
-    external: true
+  my_test_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/thanhnt26/Desktop/data-engineering-assignment/docker/volume
