@@ -25,6 +25,7 @@
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import Copyright from "@/components/Copyright";
 import { categoryList } from "@/constants";
+import { getProducts } from "@/services/products";
 
 export default {
   name: "ProductPage",
@@ -37,9 +38,29 @@ export default {
     HeaderComponent,
     Copyright,
   },
+  mounted() {
+    this.getProducts();
+  },
   methods: {
     onHandleClick(link) {
       this.$router.push(`/${link}`);
+    },
+    async getProducts() {
+      const errorMessage = {
+        type: "error",
+        message: "Cannot fetch data",
+      };
+
+      try {
+        const resp = await getProducts();
+        const { status, code } = resp;
+
+        console.log("status: ", status);
+        console.log("code: ", code);
+      } catch (error) {
+        console.log({ error });
+        this.$message(errorMessage);
+      }
     },
   },
 };
