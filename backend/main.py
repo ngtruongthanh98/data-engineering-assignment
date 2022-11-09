@@ -137,6 +137,26 @@ def all_games():
   else: 
     response_object['games'] = GAMES
   return jsonify(response_object)
+  
+@app.route('/categories', methods=['GET'])
+def get_categories():
+  categories = dynamodb.scan(
+          TableName="Product", IndexName='CategoryGlobalIndex')
+  categories["Items"] = list(set([c["CategoryName"]["S"] for c in categories["Items"]]))
+  categories["Count"] = len(categories["Items"])
+  return categories
+
+
+@app.route('/subcategories', methods=['GET'])
+def get_subcategories():
+  CategoryName = request.args.get('CategoryName')
+  print(CategoryName)
+  subcategories = dynamodb.scan(
+          TableName="Product", IndexName='SubcategoryGlobalIndex', FilterExpression="CategoryName = :z", ExpressionAttributeValues={':z': {'S':CategoryName}}
+      )
+  subcategories["Items"] = list(set([c["SubcategoryName"]["S"] for c in subcategories["Items"]]))
+  subcategories["Count"] = len(subcategories["Items"])
+  return subcategories
 
 if __name__ == '__main__':
   app.run(debug=True)

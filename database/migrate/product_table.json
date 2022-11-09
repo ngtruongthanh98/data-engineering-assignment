@@ -32,7 +32,8 @@
             "Projection": {
                 "ProjectionType": "INCLUDE",
                 "NonKeyAttributes": [
-                    "ProductName"
+                    "ProductName",
+                    "SubcategoryName"
                 ]
             }
         },
@@ -47,7 +48,8 @@
             "Projection": {
                 "ProjectionType": "INCLUDE",
                 "NonKeyAttributes": [
-                    "ProductName"
+                    "ProductName",
+                    "CategoryName"
                 ]
             }
         }
