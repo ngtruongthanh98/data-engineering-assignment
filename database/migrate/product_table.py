@@ -18,6 +18,9 @@ for row in cursor.fetchall():
         "Item": {}
       }
     }
+    # Add custom column here
+    item["PutRequest"]["Item"]["CategoryImage"] = {"S": "https://cf.shopee.vn/file/687f3967b7c2fe6a134a2c11894eea4b_tn"}
+    item["PutRequest"]["Item"]["SubcategoryImage"] = {"S": "https://cf.shopee.vn/file/3fb459e3449905545701b418e8220334_tn"}
     for i, column in enumerate(columns):
       if column == 'Name':
         item["PutRequest"]["Item"]["ProductName"] = {"S": str(row[i])}
