@@ -1,49 +1,72 @@
 <template>
-  <div>
+  <div class="search-bar-component">
     <el-autocomplete
       :placeholder="placeholder"
       v-model="dataInput"
       :fetch-suggestions="querySearch"
       :trigger-on-focus="false"
       @select="handleSelect"
+      class="search-bar-component__input"
     >
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-autocomplete>
 
-    <!-- filter dropdown with icon -->
-    <el-dropdown
-      v-if="filterDropdown"
-      class="filter-dropdown"
-      @command="handleFilterDropdown"
-    >
-      <span class="el-dropdown-link">
-        <i class="el-icon-caret-bottom"></i>
-      </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="all">All</el-dropdown-item>
-        <el-dropdown-item command="active">Active</el-dropdown-item>
-        <el-dropdown-item command="inactive">Inactive</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    <template>
+      <el-select
+        v-model="filterValue"
+        placeholder="Select"
+        class="search-bar-component__dropdown"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </template>
   </div>
 </template>
 
 <script>
 import { getProducts } from "@/services/products";
+
 export default {
   data() {
     return {
       links: [],
       dataInput: "",
       placeholder: "Search by name",
+      options: [
+        {
+          value: "ProductName",
+          label: "Product Name",
+        },
+        {
+          value: "CategoryName",
+          label: "Category Name",
+        },
+        {
+          value: "SubcategoryName",
+          label: "Subcategory Name",
+        },
+      ],
+      filterValue: "ProductName",
+      resultData: [],
+      label: "",
     };
   },
   methods: {
     querySearch(queryString, cb) {
       var links = this.links;
+      // var links = this.resultData;
+
       var results = queryString
         ? links.filter(this.createFilter(queryString))
         : links;
+
+      // var top5 = results.slice(0, 5);
       // call callback function to return suggestions
       cb(results);
     },
@@ -54,48 +77,65 @@ export default {
         );
       };
     },
-    loadAll() {
-      return [
-        { value: "vue", link: "https://github.com/vuejs/vue" },
-        { value: "element", link: "https://github.com/ElemeFE/element" },
-        { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
-        { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
-        { value: "vuex", link: "https://github.com/vuejs/vuex" },
-        { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
-        { value: "babel", link: "https://github.com/babel/babel" },
-      ];
-    },
     handleSelect(item) {
+      this.label = item.productName.S;
       console.log(item);
+      // routing to product detail page
     },
+    // loadAll() {
+    //   return [
+    //     { value: "vue", link: "https://github.com/vuejs/vue" },
+    //     { value: "element", link: "https://github.com/ElemeFE/element" },
+    //     { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
+    //     { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
+    //     { value: "vuex", link: "https://github.com/vuejs/vuex" },
+    //     { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
+    //     { value: "babel", link: "https://github.com/babel/babel" },
+    //   ];
+    // },
     async getProducts(queryParams) {
-      const errorMessage = {
-        type: "error",
-        message: "Cannot fetch data",
-      };
+      // const errorMessage = {
+      //   type: "error",
+      //   message: "Cannot fetch data",
+      // };
 
       try {
         const resp = await getProducts(queryParams);
-        const { status, data } = resp;
+        console.log(resp.data);
 
-        console.log("status: ", status);
-        console.log("id: ", data.Item.ProductID.N);
+        // this.resultData = resp.data.Item || [];
+
+        const results = [
+          { value: "vue", link: "https://github.com/vuejs/vue" },
+          { value: "element", link: "https://github.com/ElemeFE/element" },
+          { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
+          { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
+          { value: "vuex", link: "https://github.com/vuejs/vuex" },
+          { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
+          { value: "babel", link: "https://github.com/babel/babel" },
+        ];
+
+        // results.push({
+        //   value: resp.data?.Item?.productName?.S,
+        //   link: "",
+        // });
+
+        this.links = results;
       } catch (error) {
         console.log({ error });
-        this.$message(errorMessage);
+        // this.$message(errorMessage);
       }
+    },
+    boundedSearch() {
+      setTimeout(() => {
+        this.getProducts({
+          [this.filterValue]: this.dataInput,
+        });
+      }, 300);
     },
   },
   mounted() {
     // this.links = this.loadAll();
-
-    const queryParams = {
-      // CategoryName: "Clothing",
-      ProductName: "HL Nipple",
-      // SubcategoryName: "Bike Stands",
-    };
-
-    this.getProducts(queryParams);
   },
   watch: {
     dataInput: function (val) {
@@ -103,6 +143,18 @@ export default {
 
       if (val.length === 0) {
         return;
+      }
+
+      this.boundedSearch();
+    },
+    filterValue: function (val) {
+      this.dataInput = "";
+      if (val === "ProductName") {
+        this.placeholder = "Search by name";
+      } else if (val === "CategoryName") {
+        this.placeholder = "Search by category";
+      } else if (val === "SubcategoryName") {
+        this.placeholder = "Search by subcategory";
       }
     },
   },
@@ -116,5 +168,18 @@ export default {
 
 .el-autocomplete {
   display: block;
+}
+
+.search-bar-component {
+  display: flex;
+  justify-content: space-between;
+
+  &__input {
+    width: 100%;
+  }
+
+  &__dropdown {
+    margin-left: 20px;
+  }
 }
 </style>
