@@ -25,7 +25,7 @@
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import Copyright from "@/components/Copyright";
 import { categoryList } from "@/constants";
-import { getProducts } from "@/services/products";
+import { getProducts, getCategories } from "@/services/products";
 
 export default {
   name: "ProductPage",
@@ -39,20 +39,43 @@ export default {
     Copyright,
   },
   mounted() {
-    this.getProducts();
+    const queryParams = {
+      // CategoryName: "Clothing",
+      // ProductName: "HL Nipple",
+      SubcategoryName: "Bike Stands",
+    };
+    this.getProducts(queryParams);
+    this.getCategories();
   },
   methods: {
     onHandleClick(link) {
       this.$router.push(`/${link}`);
     },
-    async getProducts() {
+    async getProducts(queryParams) {
       const errorMessage = {
         type: "error",
         message: "Cannot fetch data",
       };
 
       try {
-        const resp = await getProducts();
+        const resp = await getProducts(queryParams);
+        const { status, code } = resp;
+
+        console.log("status: ", status);
+        console.log("code: ", code);
+      } catch (error) {
+        console.log({ error });
+        this.$message(errorMessage);
+      }
+    },
+    async getCategories() {
+      const errorMessage = {
+        type: "error",
+        message: "Cannot fetch data",
+      };
+
+      try {
+        const resp = await getCategories();
         const { status, code } = resp;
 
         console.log("status: ", status);
