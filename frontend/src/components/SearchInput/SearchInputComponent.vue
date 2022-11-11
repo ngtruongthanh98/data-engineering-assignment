@@ -78,9 +78,7 @@ export default {
       };
     },
     handleSelect(item) {
-      this.label = item.productName.S;
       console.log(item);
-      // routing to product detail page
     },
     // loadAll() {
     //   return [
@@ -101,10 +99,6 @@ export default {
 
       try {
         const resp = await getProducts(queryParams);
-        console.log(resp.data);
-
-        // this.resultData = resp.data.Item || [];
-
         const results = [
           { value: "vue", link: "https://github.com/vuejs/vue" },
           { value: "element", link: "https://github.com/ElemeFE/element" },
@@ -114,6 +108,15 @@ export default {
           { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
           { value: "babel", link: "https://github.com/babel/babel" },
         ];
+
+        if (resp.data.Item) {
+          console.log("resp.data: ", resp.data.Item.ProductName?.S);
+
+          results.push({
+            value: resp.data.Item.ProductName.S,
+            link: "",
+          });
+        }
 
         // results.push({
         //   value: resp.data?.Item?.productName?.S,
@@ -128,6 +131,10 @@ export default {
     },
     boundedSearch() {
       setTimeout(() => {
+        if (!this.dataInput) {
+          return;
+        }
+
         this.getProducts({
           [this.filterValue]: this.dataInput,
         });
@@ -138,13 +145,7 @@ export default {
     // this.links = this.loadAll();
   },
   watch: {
-    dataInput: function (val) {
-      console.log(val);
-
-      if (val.length === 0) {
-        return;
-      }
-
+    dataInput: function () {
       this.boundedSearch();
     },
     filterValue: function (val) {
