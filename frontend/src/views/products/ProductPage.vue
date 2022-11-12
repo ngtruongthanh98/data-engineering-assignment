@@ -6,10 +6,10 @@
     <div class="product-page-body">
       <div class="category-container">
         <div
-          v-for="(categoryItem, index) in categoryList"
+          v-for="(categoryItem, index) in productCategories"
           :key="index"
           class="category-item"
-          @click="onHandleClick(categoryItem.link)"
+          @click="onHandleClick(categoryItem.title)"
         >
           <img :src="categoryItem.image" alt="" class="image" />
           <div class="title">{{ categoryItem.title }}</div>
@@ -24,14 +24,15 @@
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import Copyright from "@/components/Copyright";
-import { categoryList } from "@/constants";
+// import { categoryList } from "@/constants";
 import { getProducts, getCategories } from "@/services/products";
 
 export default {
   name: "ProductPage",
   data: function () {
     return {
-      categoryList,
+      // categoryList,
+      productCategories: [],
     };
   },
   components: {
@@ -49,7 +50,9 @@ export default {
   },
   methods: {
     onHandleClick(link) {
-      this.$router.push(`/${link}`);
+      console.log("link: ", link);
+      // this.$router.push(`/${link}`);
+      this.$router.push(`/men-clothes`);
     },
     async getProducts(queryParams) {
       const errorMessage = {
@@ -80,6 +83,8 @@ export default {
 
         console.log("status: ", status);
         console.log("code: ", code);
+
+        this.productCategories = resp.data.Items;
       } catch (error) {
         console.log({ error });
         this.$message(errorMessage);
