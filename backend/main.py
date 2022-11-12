@@ -133,7 +133,7 @@ def serialize(model, unique=False):
       if unique:
         dict["data"] = remove_reports_duplicate(dict["data"])
     dict["total"] = len(dict["data"])
-  else: 
+  elif 'Item' in model: 
     dict = serialize_item(model["Item"])
   return dict
 
