@@ -109,19 +109,14 @@ export default {
           { value: "babel", link: "https://github.com/babel/babel" },
         ];
 
-        if (resp.data.Item) {
-          console.log("resp.data: ", resp.data.Item.ProductName?.S);
+        if (resp.status === 200) {
+          console.log("resp.data: ", resp.data.productName);
 
           results.push({
-            value: resp.data.Item.ProductName.S,
+            value: resp.data.ProductName,
             link: "",
           });
         }
-
-        // results.push({
-        //   value: resp.data?.Item?.productName?.S,
-        //   link: "",
-        // });
 
         this.links = results;
       } catch (error) {
@@ -138,7 +133,7 @@ export default {
         this.getProducts({
           [this.filterValue]: this.dataInput,
         });
-      }, 300);
+      }, 500);
     },
   },
   mounted() {
