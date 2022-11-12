@@ -1,7 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_cors import CORS
 import boto3
-import uuid
 import json
 from urllib.parse import urlencode
 
@@ -31,10 +30,10 @@ def get_products():
 
   if any([c for c in columns if c in product_index]):
     if query_columns.get('ProductName') is not None:
-      return dynamodb.get_item(TableName="Product", Key={
+      result = dynamodb.get_item(TableName="Product", Key={
           'ProductName': {'S': query_columns.get('ProductName')[0]}})
     elif query_columns.get('CategoryName') is not None:
-        return dynamodb.query(
+        result = dynamodb.query(
             TableName="Product", IndexName='CategoryGlobalIndex',
             ExpressionAttributeValues={':categoryName': {
                 'S': query_columns.get('CategoryName')[0],
@@ -42,13 +41,14 @@ def get_products():
             KeyConditionExpression='CategoryName = :categoryName'
         )
     elif query_columns.get('SubcategoryName') is not None:
-      return dynamodb.query(
+      result = dynamodb.query(
           TableName="Product", IndexName='SubcategoryGlobalIndex',
           ExpressionAttributeValues={':subcategoryName': {
               'S': query_columns.get('SubcategoryName')[0],
           }},
           KeyConditionExpression='SubcategoryName = :subcategoryName'
       )
+  return serialize(result)
   # else:
   #   def camelCase(s): return s[:1].lower() + s[1:] if s else ''
   #   expression_attribute_values = {}
@@ -84,94 +84,59 @@ def get_comments():
                               }).build_full_result()
   return result
 
-
-GAMES = [
-    {
-        'id': uuid.uuid4().hex,
-        'title': 'Identity V',
-        'genre': ' horror',
-        'played': False
-    },
-    {
-        'id': uuid.uuid4().hex,
-        'title': 'Bida',
-        'genre': ' sports',
-        'played': False
-    },
-    {
-        'id': uuid.uuid4().hex,
-        'title': 'Evil Within',
-        'genre': 'horror',
-        'played': False,
-    },
-    {
-        'id': uuid.uuid4().hex,
-        'title': 'The last of us',
-        'genre': 'survival',
-        'played': True,
-    },
-    {
-        'id': uuid.uuid4().hex,
-        'title': 'Days gone',
-        'genre': 'horror/survival',
-        'played': False,
-    },
-    {
-        'id': uuid.uuid4().hex,
-        'title': 'Mario',
-        'genre': 'retro',
-        'played': True,
-    }
-]
-
-# The GET route handler
-
-
-@app.route('/games', methods=['GET', 'POST'])
-def all_games():
-  response_object = {'status': 'success'}
-  if request.method == "POST":
-    post_data = request.get_json()
-    GAMES.append({
-        'id': uuid.uuid4().hex,
-        'title': post_data.get('title'),
-        'genre': post_data.get('genre'),
-        'played': post_data.get('played'),
-    })
-    response_object['message'] = 'Game Added!'
-  else:
-    response_object['games'] = GAMES
-  return jsonify(response_object)
-
-
 @app.route('/categories', methods=['GET'])
 def get_categories():
   categories = dynamodb.scan(
-      TableName="Product", IndexName='CategoryGlobalIndex')
-  categories["Items"] = [{"title": c["CategoryName"]["S"], "image": c["CategoryImage"]["S"],
-                             "link": "/subcategories?" + urlencode({'CategoryName': c['CategoryName']['S']})} for c in categories["Items"]]
-  categories["Items"] = remove_reports_duplicate(categories["Items"])
-  result = {"Count": len(categories["Items"]), "Items": categories["Items"]}
+    ProjectionExpression="CategoryImage,CategoryName",
+    TableName="Product", IndexName='CategoryGlobalIndex')
+  result = serialize(categories, True)
+  for item in result["data"]:
+    item["link"] =  "/subcategories?" + urlencode({'CategoryName': item['categoryName']})
   return result
 
 
 @app.route('/subcategories', methods=['GET'])
 def get_subcategories():
   CategoryName = request.args.get('CategoryName')
-  print(CategoryName)
   subcategories = dynamodb.scan(
-      TableName="Product", IndexName='SubcategoryGlobalIndex', FilterExpression="CategoryName = :z", ExpressionAttributeValues={':z': {'S': CategoryName}}
+    TableName="Product", IndexName='SubcategoryGlobalIndex', FilterExpression="CategoryName = :z", ExpressionAttributeValues={':z': {'S': CategoryName}}
   )
-  subcategories["Items"] = [{"title": c["SubcategoryName"]["S"], "image": c["SubcategoryImage"]["S"],
-                             "link": "/products?" + urlencode({"ProductName": c['ProductName']['S']}), "category": c['CategoryName']['S']} for c in subcategories["Items"]]
-  subcategories["Items"] = remove_reports_duplicate(subcategories["Items"])  
-  result = {"Count": len(subcategories["Items"]), "Items": subcategories["Items"]}
+  result = serialize(subcategories)
+  for item in result["data"]:
+    item["link"] =  "/products?" + urlencode({'ProductName': item['productName']})
+
   return result
 
-def remove_reports_duplicate(list: list) -> list:
-    elm_to_string = [json.dumps(l) for l in list]
-    unique_reports = set(elm_to_string)
-    return [json.loads(report) for report in unique_reports]
 
+def serialize(model, unique=False):
+  def remove_reports_duplicate(list: list) -> list:
+      elm_to_string = [json.dumps(l) for l in list]
+      unique_reports = set(elm_to_string)
+      return [json.loads(report) for report in unique_reports]
+      
+  def to_camel_case(str) -> str:
+    return str[0].lower() + str[1:]
+
+  def serialize_item(item):
+    new_item = {}
+    for key, item_data in item.items():
+      key = to_camel_case(key)
+      for _, item_value in item_data.items():
+        new_item[key] = item_value
+    return new_item
+
+  dict = {}
+  if 'Count' in model:
+    for item in model["Items"]:
+      new_item = serialize_item(item)
+      dict.setdefault('data', []).append(new_item)
+      if unique:
+        dict["data"] = remove_reports_duplicate(dict["data"])
+    dict["total"] = len(dict["data"])
+  else: 
+    dict = serialize_item(model["Item"])
+  return dict
+
+  
 if __name__ == '__main__':
   app.run(debug=True)
