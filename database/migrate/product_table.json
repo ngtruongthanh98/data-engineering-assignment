@@ -5,12 +5,12 @@
             "AttributeType": "S"
         },
         {
-            "AttributeName": "CategoryName",
+            "AttributeName": "SubcategoryName",
             "AttributeType": "S"
         },
         {
-            "AttributeName": "SubcategoryName",
-            "AttributeType": "S"
+            "AttributeName": "ProductID",
+            "AttributeType": "N"
         }
     ],
     "TableName": "Product",
@@ -18,26 +18,13 @@
         {
             "AttributeName": "ProductName",
             "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "ProductID",
+            "KeyType": "RANGE"
         }
     ],
     "GlobalSecondaryIndexes": [
-        {
-            "IndexName": "CategoryGlobalIndex",
-            "KeySchema": [
-                {
-                    "AttributeName": "CategoryName",
-                    "KeyType": "HASH"
-                }
-            ],
-            "Projection": {
-                "ProjectionType": "INCLUDE",
-                "NonKeyAttributes": [
-                    "ProductName",
-                    "SubcategoryName",
-                    "CategoryImage"
-                ]
-            }
-        },
         {
             "IndexName": "SubcategoryGlobalIndex",
             "KeySchema": [
@@ -50,7 +37,6 @@
                 "ProjectionType": "INCLUDE",
                 "NonKeyAttributes": [
                     "ProductName",
-                    "CategoryName",
                     "SubcategoryImage"
                 ]
             }

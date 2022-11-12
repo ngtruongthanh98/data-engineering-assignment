@@ -30,16 +30,11 @@ def get_products():
 
   if any([c for c in columns if c in product_index]):
     if query_columns.get('ProductName') is not None:
-      result = dynamodb.get_item(TableName="Product", Key={
-          'ProductName': {'S': query_columns.get('ProductName')[0]}})
-    elif query_columns.get('CategoryName') is not None:
-        result = dynamodb.query(
-            TableName="Product", IndexName='CategoryGlobalIndex',
-            ExpressionAttributeValues={':categoryName': {
-                'S': query_columns.get('CategoryName')[0],
-            }},
-            KeyConditionExpression='CategoryName = :categoryName'
-        )
+      result = dynamodb.query(TableName="Product",
+           ExpressionAttributeValues={ 
+          ':productName': {'S': query_columns.get('ProductName')[0]}
+          },
+          KeyConditionExpression='ProductName = :productName')
     elif query_columns.get('SubcategoryName') is not None:
       result = dynamodb.query(
           TableName="Product", IndexName='SubcategoryGlobalIndex',
@@ -84,36 +79,60 @@ def get_comments():
                               }).build_full_result()
   return result
 
+
 @app.route('/categories', methods=['GET'])
 def get_categories():
   categories = dynamodb.scan(
-    ProjectionExpression="CategoryImage,CategoryName",
-    TableName="Product", IndexName='CategoryGlobalIndex')
+      ProjectionExpression="CategoryName, image",
+      TableName="Category")
   result = serialize(categories, True)
   for item in result["data"]:
-    item["link"] =  "/subcategories?" + urlencode({'CategoryName': item['categoryName']})
+    item["link"] = "/subcategories?" + \
+        urlencode({'CategoryName': item['categoryName']})
   return result
 
 
 @app.route('/subcategories', methods=['GET'])
 def get_subcategories():
   CategoryName = request.args.get('CategoryName')
-  subcategories = dynamodb.scan(
-    TableName="Product", IndexName='SubcategoryGlobalIndex', FilterExpression="CategoryName = :z", ExpressionAttributeValues={':z': {'S': CategoryName}}
+  subcategories = dynamodb.query(
+      ProjectionExpression="SubcategoryName",
+      ExpressionAttributeValues={':categoryName': {
+          'S': CategoryName,
+      }}, KeyConditionExpression='CategoryName = :categoryName',  TableName="Category")
+  print("🚀 ~ file: main.py ~ line 108 ~ subcategories", subcategories)
+
+  subcate_filter_expression, subcate_expression_value = query_in_list(subcategories["Items"], 'SubcategoryName')
+  products = dynamodb.scan(
+      TableName="Product", 
+      IndexName='SubcategoryGlobalIndex', 
+      FilterExpression=f"SubcategoryName IN ({subcate_filter_expression})", 
+      ExpressionAttributeValues=subcate_expression_value
   )
-  result = serialize(subcategories)
+  result = serialize(products)
   for item in result["data"]:
     item["link"] =  "/products?" + urlencode({'ProductName': item['productName']})
 
   return result
 
-
-def serialize(model, unique=False):
-  def remove_reports_duplicate(list: list) -> list:
+def query_in_list(dynamodb_list: list, attribute_to_query: str):
+  unique_dynamodb_list = remove_reports_duplicate(dynamodb_list)
+  filter_expression = ''
+  expression_value = {}
+  for i, element in enumerate(unique_dynamodb_list):
+    expression_value[f":cond{i}"] = element[attribute_to_query]
+    if i != 0:
+      filter_expression += ","
+    filter_expression += f":cond{i}"
+  return filter_expression, expression_value
+  
+def remove_reports_duplicate(list: list) -> list:
       elm_to_string = [json.dumps(l) for l in list]
       unique_reports = set(elm_to_string)
       return [json.loads(report) for report in unique_reports]
-      
+
+def serialize(model, unique=False):
+  
   def to_camel_case(str) -> str:
     return str[0].lower() + str[1:]
 
@@ -127,16 +146,17 @@ def serialize(model, unique=False):
 
   dict = {}
   if 'Count' in model:
+    dict["data"] = []
     for item in model["Items"]:
       new_item = serialize_item(item)
       dict.setdefault('data', []).append(new_item)
       if unique:
         dict["data"] = remove_reports_duplicate(dict["data"])
     dict["total"] = len(dict["data"])
-  elif 'Item' in model: 
+  elif 'Item' in model:
     dict = serialize_item(model["Item"])
   return dict
 
-  
+
 if __name__ == '__main__':
   app.run(debug=True)
