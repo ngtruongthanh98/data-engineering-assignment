@@ -43,7 +43,7 @@ const routes = [
     component: ProductPage,
   },
   {
-    path: "/product/:productId",
+    path: "/product/:productName",
     name: "productDetail",
     component: ProductDetailPage,
   },

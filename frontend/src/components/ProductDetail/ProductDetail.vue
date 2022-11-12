@@ -9,9 +9,9 @@
           <div class="col-2">
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <!-- <el-breadcrumb-item :to="{ path: '/' }">Homepage</el-breadcrumb-item> -->
-              <el-breadcrumb-item>Category</el-breadcrumb-item>
-              <el-breadcrumb-item>Sub Category</el-breadcrumb-item>
-              <el-breadcrumb-item>Product</el-breadcrumb-item>
+              <el-breadcrumb-item>{{ categoryName }}</el-breadcrumb-item>
+              <el-breadcrumb-item>{{ subCategoryName }}</el-breadcrumb-item>
+              <el-breadcrumb-item>{{ productName }}</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
         </div>
@@ -76,7 +76,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    productName: {
+      type: String,
+      default: "HL Nipple",
+    },
+    categoryName: {
+      type: String,
+      default: "Category",
+    },
+    subCategoryName: {
+      type: String,
+      default: "Sub Category",
+    },
+  },
+};
 </script>
 
 <style lang="scss">

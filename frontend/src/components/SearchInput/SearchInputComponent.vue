@@ -79,6 +79,7 @@ export default {
     },
     handleSelect(item) {
       console.log(item);
+      this.$router.push(`${item.link}`);
     },
     // loadAll() {
     //   return [
@@ -99,23 +100,25 @@ export default {
 
       try {
         const resp = await getProducts(queryParams);
-        const results = [
-          { value: "vue", link: "https://github.com/vuejs/vue" },
-          { value: "element", link: "https://github.com/ElemeFE/element" },
-          { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
-          { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
-          { value: "vuex", link: "https://github.com/vuejs/vuex" },
-          { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
-          { value: "babel", link: "https://github.com/babel/babel" },
+        let results = [
+          // { value: "vue", link: "https://github.com/vuejs/vue" },
+          // { value: "element", link: "https://github.com/ElemeFE/element" },
+          // { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
+          // { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
+          // { value: "vuex", link: "https://github.com/vuejs/vuex" },
+          // { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
+          // { value: "babel", link: "https://github.com/babel/babel" },
         ];
 
-        if (resp.status === 200) {
-          console.log("resp.data: ", resp.data.productName);
-
+        if (resp.data) {
+          if (!resp.data.productName) {
+            return;
+          }
           results.push({
-            value: resp.data.ProductName,
-            link: "",
+            value: resp.data.productName,
+            link: "/product/" + resp.data.productName,
           });
+          console.log("results: ", results);
         }
 
         this.links = results;
