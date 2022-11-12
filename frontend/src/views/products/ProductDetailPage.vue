@@ -19,6 +19,19 @@
       :productName="this.productData.productName"
       :categoryName="this.productData.categoryName"
       :subCategoryName="this.productData.subCategoryName"
+      :brand="this.productData.brand"
+      :language="this.productData.language"
+      :culture="this.productData.culture"
+      :producer="this.productData.producer"
+      :sellStartDate="this.productData.sellStartDate"
+      :sellEndDate="this.productData.sellEndDate"
+      :quantity="this.productData.safetyStockLevel"
+      :weight="this.productData.weight"
+      :title="this.productData.title"
+      :documentLevel="this.productData.documentLevel"
+      :owner="this.productData.owner"
+      :status="this.productData.status"
+      :documnentSummary="this.productData.documnentSummary"
     />
     <product-rating />
     <copyright />
