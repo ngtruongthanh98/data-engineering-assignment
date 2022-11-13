@@ -3,15 +3,15 @@
     <header-component />
     <product-overview
       :productName="this.productData.productName"
-      :imageURL="this.productData.categoryImage"
-      :productNumber="this.productData.productNumber"
+      :imageURL="this.productData.categoryImage || this.noDataImage"
+      :productNumber="this.productData.productID"
       :categoryName="this.productData.categoryName"
       :subCategoryName="this.productData.subCategoryName"
-      :sellStartDate="this.productData.sellStartDate"
+      :sellStartDate="this.productData.partnerItemCreated"
       :sellEndDate="this.productData.sellEndDate"
-      :producer="this.productData.producer"
+      :producer="this.productData.identityItemBrand"
       :price="this.productData.standardCost"
-      :quantity="this.productData.safetyStockLevel"
+      :quantity="this.productData.partnerItemQty"
       :productStyle="this.productData.productStyle"
       :rating="this.productData.rating"
     />
@@ -19,19 +19,19 @@
       :productName="this.productData.productName"
       :categoryName="this.productData.categoryName"
       :subCategoryName="this.productData.subCategoryName"
-      :brand="this.productData.brand"
+      :brand="this.productData.identityItemBrand"
       :language="this.productData.language"
       :culture="this.productData.culture"
-      :producer="this.productData.producer"
-      :sellStartDate="this.productData.sellStartDate"
+      :producer="this.productData.identityItemBrand"
+      :sellStartDate="this.productData.partnerItemCreated"
       :sellEndDate="this.productData.sellEndDate"
-      :quantity="this.productData.safetyStockLevel"
+      :quantity="this.productData.partnerItemQty"
       :weight="this.productData.weight"
       :title="this.productData.title"
       :documentLevel="this.productData.documentLevel"
       :owner="this.productData.owner"
       :status="this.productData.status"
-      :documnentSummary="this.productData.documnentSummary"
+      :documnentSummary="this.productData.identityItemDescription"
     />
     <product-rating />
     <copyright />
@@ -52,6 +52,7 @@ export default {
   data() {
     return {
       productData: {},
+      noDataImage: require("@/assets/No_Image_Available.jpg"),
     };
   },
   components: {
@@ -66,7 +67,7 @@ export default {
       try {
         const resp = await getProducts(queryParams);
 
-        this.productData = resp.data;
+        this.productData = resp.data.data[0] || resp.data.data;
 
         console.log("productData: ", this.productData);
       } catch (error) {
@@ -75,7 +76,10 @@ export default {
     },
   },
   mounted() {
-    const productName = this.$route.params.productName;
+    const productName = this.$route.path.split("/")[2];
+
+    console.log("productName: ", productName);
+
     const queryParams = {
       ProductName: productName,
     };

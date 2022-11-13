@@ -90,10 +90,10 @@ export default {
   methods: {
     onClickProductDetail() {
       const product = {
-        id: 2424,
+        productName: "Books",
       };
 
-      this.$router.push(`/product/${product.id}`);
+      this.$router.push(`/product/${product.productName}`);
     },
   },
 };

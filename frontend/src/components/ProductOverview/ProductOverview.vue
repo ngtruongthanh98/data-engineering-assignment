@@ -163,7 +163,7 @@ export default {
       default: "49.99",
     },
     quantity: {
-      type: String,
+      type: Number || String,
       default: "5000",
     },
     productStyle: {
@@ -190,10 +190,10 @@ export default {
   methods: {
     onClickTransactionDetail() {
       const transaction = {
-        id: 2424,
+        productName: "Books",
       };
 
-      this.$router.push(`/transaction/${transaction.id}`);
+      this.$router.push(`/transaction/${transaction.productName}`);
     },
   },
   mounted() {},
