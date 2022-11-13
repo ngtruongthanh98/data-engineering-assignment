@@ -1,8 +1,8 @@
 {
     "AttributeDefinitions": [
         {
-            "AttributeName": "ProductID",
-            "AttributeType": "N"
+            "AttributeName": "ProductName",
+            "AttributeType": "S"
         },
         {
             "AttributeName": "ReviewDate",
@@ -12,7 +12,7 @@
     "TableName": "Comment",
     "KeySchema": [
         {
-            "AttributeName": "ProductID",
+            "AttributeName": "ProductName",
             "KeyType": "HASH"
         },
         {

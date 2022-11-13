@@ -50,22 +50,22 @@ def get_comments():
   page_size = request.args.get('page_size')
   page_size = 5 if page_size is not None else 5
   starting_token = request.args.get('starting_token')
-  productID = request.args.get('productID')
+  ProductName = request.args.get('productName')
 
-  if productID is None:
-    return {"status": False, "message": "provide productID"}
+  if ProductName is None:
+    return {"status": False, "message": "provide ProductName"}
 
   paginator = dynamodb.get_paginator('query')
   result = paginator.paginate(TableName="Comment",
-                              ExpressionAttributeValues={':productID': {
-                                  'N': productID,
-                              }}, KeyConditionExpression='ProductID = :productID',
+                              ExpressionAttributeValues={':ProductName': {
+                                  'S': ProductName,
+                              }}, KeyConditionExpression='ProductName = :ProductName',
                               PaginationConfig={
                                   'MaxItems': max_items,
                                   'PageSize': page_size,
                                   'StartingToken': starting_token
                               }).build_full_result()
-  return result
+  return serialize(result)
 
 
 @app.route('/categories', methods=['GET'])
@@ -153,6 +153,8 @@ def serialize(model, unique=False):
     dict["total"] = len(dict["data"])
   elif 'Item' in model:
     dict = serialize_item(model["Item"])
+  if "NextToken" in model:
+    dict["nextToken"] = model["NextToken"]
   return dict
 
 
