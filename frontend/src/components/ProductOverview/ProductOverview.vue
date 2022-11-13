@@ -196,9 +196,7 @@ export default {
       this.$router.push(`/transaction/${transaction.id}`);
     },
   },
-  mounted() {
-    console.log("this.props.imageURL: ", this.imageURL);
-  },
+  mounted() {},
 };
 </script>
 

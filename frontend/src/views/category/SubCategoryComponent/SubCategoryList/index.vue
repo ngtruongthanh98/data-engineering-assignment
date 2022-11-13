@@ -14,7 +14,7 @@
       :key="index"
       class="sub-category-item"
     >
-      {{ item }}
+      {{ item.subcategoryName }}
     </div>
   </div>
 </template>

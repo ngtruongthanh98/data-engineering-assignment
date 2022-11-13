@@ -6,13 +6,13 @@
     <div class="product-page-body">
       <div class="category-container">
         <div
-          v-for="(categoryItem, index) in categoryList"
+          v-for="(categoryItem, index) in productCategories"
           :key="index"
           class="category-item"
-          @click="onHandleClick(categoryItem.link)"
+          @click="onHandleClick(categoryItem.categoryName)"
         >
-          <img :src="categoryItem.image" alt="" class="image" />
-          <div class="title">{{ categoryItem.title }}</div>
+          <img src="@/assets/No_Image_Available.jpg" alt="" class="image" />
+          <div class="title">{{ categoryItem.categoryName }}</div>
         </div>
       </div>
     </div>
@@ -24,14 +24,12 @@
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import Copyright from "@/components/Copyright";
-import { categoryList } from "@/constants";
 import { getProducts, getCategories } from "@/services/products";
 
 export default {
   name: "ProductPage",
   data: function () {
     return {
-      categoryList,
       productCategories: [],
     };
   },
@@ -50,9 +48,7 @@ export default {
   },
   methods: {
     onHandleClick(link) {
-      console.log("link: ", link);
-      // this.$router.push(`/${link}`);
-      this.$router.push(`/men-clothes`);
+      this.$router.push(`/${link}`);
     },
     async getProducts(queryParams) {
       const errorMessage = {
@@ -82,7 +78,9 @@ export default {
 
         console.log("status: ", status);
 
-        this.productCategories = resp.data;
+        this.productCategories = resp.data.data;
+
+        console.log("productCategories: ", this.productCategories);
       } catch (error) {
         console.log({ error });
         this.$message(errorMessage);

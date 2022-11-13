@@ -25,8 +25,15 @@
 <script>
 import SubCategoryList from "./SubCategoryList";
 import ProductItem from "./ProductItem";
+// import { getSubCategories } from "@/services/products";
 
 export default {
+  data() {
+    return {
+      // title: "",
+      // subCategoryList: [],
+    };
+  },
   props: {
     title: {
       type: String,
@@ -40,6 +47,26 @@ export default {
   components: {
     SubCategoryList,
     ProductItem,
+  },
+  methods: {
+    // async getSubCategories() {
+    //   const queryParams = {
+    //     CategoryName: "Accessories",
+    //   };
+    //   const response = await getSubCategories(queryParams);
+    //   console.log("response: ", response);
+    //   // this.subCategoryList = response.data.data;
+    //   // map response.data.data
+    //   this.subCategoryList = response.data.data.map((item) => {
+    //     return {
+    //       subcategoryName: item.subcategoryName,
+    //     };
+    //   });
+    //   console.log("subCategoryList: ", this.subCategoryList);
+    // },
+  },
+  mounted() {
+    // this.getSubCategories("Accessories");
   },
 };
 </script>
