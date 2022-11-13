@@ -3,6 +3,7 @@ from flask_cors import CORS
 import boto3
 import json
 from urllib.parse import urlencode
+from random import randint
 
 app = Flask(__name__)
 
@@ -107,6 +108,22 @@ def get_subcategories():
 
   return result
 
+
+@app.route('/product', methods=['POST'])
+def create_new_product():
+  body = request.json
+  new_item = {}
+  for key, value in body.items():
+    key = key[0].upper() + key[1:]
+    if isinstance(value, bool):
+      new_item[key] = {"BOOL": value}
+    elif isinstance(value, (int, float)):
+      new_item[key] = {"N": f"{value}"}
+    else:
+      new_item[key] = {"S": str(value)}
+
+  new_item["ProductID"] = {'N': f"{randint(0, 100000)}"}
+  return dynamodb.put_item(TableName="Product", Item=new_item)
 
 def serialize(model, unique=False):
   def remove_reports_duplicate(list: list) -> list:
