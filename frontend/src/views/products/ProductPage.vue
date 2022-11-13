@@ -25,13 +25,14 @@
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import Copyright from "@/components/Copyright";
 import { categoryList } from "@/constants";
-import { getProducts } from "@/services/products";
+import { getProducts, getCategories } from "@/services/products";
 
 export default {
   name: "ProductPage",
   data: function () {
     return {
       categoryList,
+      productCategories: [],
     };
   },
   components: {
@@ -39,24 +40,49 @@ export default {
     Copyright,
   },
   mounted() {
-    this.getProducts();
+    const queryParams = {
+      // CategoryName: "Clothing",
+      // ProductName: "HL Nipple",
+      SubcategoryName: "Bike Stands",
+    };
+    this.getProducts(queryParams);
+    this.getCategories();
   },
   methods: {
     onHandleClick(link) {
-      this.$router.push(`/${link}`);
+      console.log("link: ", link);
+      // this.$router.push(`/${link}`);
+      this.$router.push(`/men-clothes`);
     },
-    async getProducts() {
+    async getProducts(queryParams) {
       const errorMessage = {
         type: "error",
         message: "Cannot fetch data",
       };
 
       try {
-        const resp = await getProducts();
-        const { status, code } = resp;
+        const resp = await getProducts(queryParams);
+        const { status } = resp;
 
         console.log("status: ", status);
-        console.log("code: ", code);
+      } catch (error) {
+        console.log({ error });
+        this.$message(errorMessage);
+      }
+    },
+    async getCategories() {
+      const errorMessage = {
+        type: "error",
+        message: "Cannot fetch data",
+      };
+
+      try {
+        const resp = await getCategories();
+        const { status } = resp;
+
+        console.log("status: ", status);
+
+        this.productCategories = resp.data;
       } catch (error) {
         console.log({ error });
         this.$message(errorMessage);
