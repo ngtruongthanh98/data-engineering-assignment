@@ -91,6 +91,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(5, 230px);
       gap: 10px;
+      height: 80vh;
     }
   }
 }
