@@ -7,38 +7,30 @@
         {
             "AttributeName": "SubcategoryName",
             "AttributeType": "S"
-        },
-        {
-            "AttributeName": "ProductID",
-            "AttributeType": "N"
         }
     ],
     "TableName": "Product",
     "KeySchema": [
         {
-            "AttributeName": "ProductName",
+            "AttributeName": "SubcategoryName",
             "KeyType": "HASH"
         },
         {
-            "AttributeName": "ProductID",
+            "AttributeName": "ProductName",
             "KeyType": "RANGE"
         }
     ],
     "GlobalSecondaryIndexes": [
         {
-            "IndexName": "SubcategoryGlobalIndex",
+            "IndexName": "ProductNameGlobalIndex",
             "KeySchema": [
                 {
-                    "AttributeName": "SubcategoryName",
+                    "AttributeName": "ProductName",
                     "KeyType": "HASH"
                 }
             ],
             "Projection": {
-                "ProjectionType": "INCLUDE",
-                "NonKeyAttributes": [
-                    "ProductName",
-                    "SubcategoryImage"
-                ]
+                "ProjectionType": "ALL"
             }
         }
     ],

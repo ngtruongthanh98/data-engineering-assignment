@@ -2,6 +2,8 @@ import pyodbc
 import boto3
 import mysql.connector
 import traceback
+import re
+import random
 
 connection = pyodbc.connect(
     'DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=data_eng;Trusted_Connection=yes;')
@@ -16,25 +18,6 @@ mssql_columns = [column[0] for column in mssql_cursor.description]
 print(mssql_columns)
 
 items = []
-# for row in mssql_cursor.fetchall():
-#     index = {
-#       "PutRequest": {
-#         "Item": {}
-#       }
-#     }
-#     # Add custom column here
-#     index["PutRequest"]["Item"]["SubcategoryImage"] = {"S": "https://cf.shopee.vn/file/3fb459e3449905545701b418e8220334_tn"}
-#     for i, column in enumerate(mssql_columns):
-#       if column == 'Name':
-#         index["PutRequest"]["Item"]["ProductName"] = {"S": str(row[i])}
-#       elif row[i] is not None:
-#         if isinstance(row[i], bool):
-#           index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
-#         elif isinstance(row[i], (int, float)):
-#           index["PutRequest"]["Item"][column] = {"N": f"{row[i]}"}
-#         else:
-#           index["PutRequest"]["Item"][column] = {"S": str(row[i])}
-#     items.append(index)
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -190,22 +173,32 @@ mysql_query = "select pi.id ProductID, " \
     "LEFT JOIN categories c ON pci.category_id = c.id " \
 		"LEFT JOIN category_sub_categories csc on csc.category_id =c.id " \
     "LEFT JOIN sub_categories sc on csc.sub_category_id=sc.id " \
-    "group by pi.id " \
-	  "order by sc.name desc "
+    "group by pi.id" \
 
 mysql_cursor.execute(mysql_query)
-mysql_columns = [column[0] for column in mysql_cursor.description]
-print("🚀 ~ file: category_table.py ~ line 14 ~ mysql_columns", mysql_columns)
+products_data = mysql_cursor.fetchall()
+product_columns = [column[0] for column in mysql_cursor.description]
+print("🚀 ~ file: category_table.py ~ line 14 ~ mysql_columns", product_columns)
 
-for row in mysql_cursor:
+mysql_cursor.execute("SELECT distinct(sc.name) FROM category_sub_categories csc LEFT JOIN categories c ON csc.category_id = c.id LEFT JOIN sub_categories sc ON sc.id = csc.sub_category_id")
+subcategories = mysql_cursor.fetchall()
+subcategories = [sc[0] for sc in subcategories]
+
+'''MSSQL PROCESSING'''
+for row in mssql_cursor.fetchall():
     index = {
       "PutRequest": {
         "Item": {}
       }
     }
     # Add custom column here
-    for i, column in enumerate(mysql_columns):
-      if row[i] is not None:
+    for i, column in enumerate(mssql_columns):
+      if column == 'Name':
+        index["PutRequest"]["Item"]["ProductName"] = {"S": str(row[i])}
+      if column == 'SubcategoryName' and row[i] is None:
+        index["PutRequest"]["Item"][column] = {'S': random.choice(subcategories)}
+        
+      elif row[i] is not None:
         if isinstance(row[i], bool):
           index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
         elif isinstance(row[i], (int, float)):
@@ -214,23 +207,31 @@ for row in mysql_cursor:
           index["PutRequest"]["Item"][column] = {"S": str(row[i])}
     items.append(index)
 
+'''END OF MSSQL'''
+for row in products_data:
+    index = {
+      "PutRequest": {
+        "Item": {}
+      }
+    }
+    # Add custom column here
+    for i, column in enumerate(product_columns):
+      if column == 'SubcategoryName' and row[i] is None:
+        index["PutRequest"]["Item"][column] = {'S': random.choice(subcategories)}
 
-# number_of_items = len(items)
-# print("🚀 ~ file: product_table.py ~ line 201 ~ number_of_items", number_of_items)
-# step = 20
-# for index in range(0, number_of_items, step):
-#   if number_of_items < index + step:
-#     list_item = items[index: -1]
-#   else: list_item = items[index: index + step]
-#   print("🚀 ~ file: product_table.py ~ line 224 ~ list_item", list_item)
-#   response = client.batch_write_item( 
-#     RequestItems={
-#       "Product": list_item,
-#     }
-#   )
-#   print("category_table.py ~ line 47 ~ response", response["ResponseMetadata"]["HTTPStatusCode"], response["UnprocessedItems"])
+      if row[i] is not None:
+        if isinstance(row[i], bool):
+          index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
+        elif isinstance(row[i], (int, float)):
+          index["PutRequest"]["Item"][column] = {"N": f"{row[i]}"}
+        else:
+          index["PutRequest"]["Item"][column] = {"S": re.sub(re.compile('<.*?>'), '', str(row[i]))}
+    items.append(index)
+
+logf = open("logger.log", "w")
 
 for item in items:
+  print("~", item["PutRequest"]["Item"]["ProductID"]['N'])
   try:
     response = client.batch_write_item( 
       RequestItems={
@@ -238,9 +239,9 @@ for item in items:
       }
     )
     if response["ResponseMetadata"]["HTTPStatusCode"] != 200:
-      print(response)
+      logf.write("WARNING: {0}: {1}\n".format(str(item["PutRequest"]["Item"]), response))
   except BaseException as e:
-    print('item: ', item)
+    logf.write("ERROR: {0}: {1}\n".format(str(item["PutRequest"]["Item"]), str(e)))
     print(traceback.format_exc())
 
 

@@ -20,40 +20,27 @@ def greeting():
 
 dynamodb = boto3.client('dynamodb', endpoint_url='http://localhost:8000')
 
-product_index = ['ProductName', 'SubcategoryName', 'CategoryName']
-
 
 @app.route('/products', methods=['GET'])
 def get_products():
   query_columns = request.args.to_dict(flat=False)
-  columns = [qc for qc in query_columns]
 
-  if any([c for c in columns if c in product_index]):
-    if query_columns.get('ProductName') is not None:
-      result = dynamodb.query(TableName="Product",
-           ExpressionAttributeValues={ 
+  if query_columns.get('ProductName') is not None:
+    result = dynamodb.query(TableName="Product",
+        IndexName='ProductNameGlobalIndex', 
+        ExpressionAttributeValues={ 
           ':productName': {'S': query_columns.get('ProductName')[0]}
-          },
-          KeyConditionExpression='ProductName = :productName')
-    elif query_columns.get('SubcategoryName') is not None:
-      result = dynamodb.query(
-          TableName="Product", IndexName='SubcategoryGlobalIndex',
-          ExpressionAttributeValues={':subcategoryName': {
-              'S': query_columns.get('SubcategoryName')[0],
-          }},
-          KeyConditionExpression='SubcategoryName = :subcategoryName'
-      )
+        },
+        KeyConditionExpression='ProductName = :productName')
+  elif query_columns.get('SubcategoryName') is not None:
+    result = dynamodb.query(
+        TableName="Product",
+        ExpressionAttributeValues={':subcategoryName': {
+            'S': query_columns.get('SubcategoryName')[0],
+        }},
+        KeyConditionExpression='SubcategoryName = :subcategoryName'
+    )
   return serialize(result)
-  # else:
-  #   def camelCase(s): return s[:1].lower() + s[1:] if s else ''
-  #   expression_attribute_values = {}
-  #   for column in columns:
-  #     expression_attribute_values[':' + camelCase(
-  #         column)] = query_columns.get(column)[0]
-  #     print("🚀 ~ file: main.py ~ line 56 ~ expression_attribute_values", expression_attribute_values)
-  #   return dynamodb.scan(
-  #       TableName="Product", FilterExpression="ProductName = :z", ExpressionAttributeValues={':z': {'S':'HL Nipple'}})
-
 
 @app.route('/comments', methods=['GET'])
 def get_comments():
@@ -95,23 +82,16 @@ def get_categories():
 @app.route('/subcategories', methods=['GET'])
 def get_subcategories():
   CategoryName = request.args.get('CategoryName')
+
   subcategories = dynamodb.query(
-      ProjectionExpression="SubcategoryName",
+      # ProjectionExpression="SubcategoryName",
       ExpressionAttributeValues={':categoryName': {
           'S': CategoryName,
       }}, KeyConditionExpression='CategoryName = :categoryName',  TableName="Category")
-  print("🚀 ~ file: main.py ~ line 108 ~ subcategories", subcategories)
 
-  subcate_filter_expression, subcate_expression_value = query_in_list(subcategories["Items"], 'SubcategoryName')
-  products = dynamodb.scan(
-      TableName="Product", 
-      IndexName='SubcategoryGlobalIndex', 
-      FilterExpression=f"SubcategoryName IN ({subcate_filter_expression})", 
-      ExpressionAttributeValues=subcate_expression_value
-  )
-  result = serialize(products)
+  result = serialize(subcategories)
   for item in result["data"]:
-    item["link"] =  "/products?" + urlencode({'ProductName': item['productName']})
+    item["link"] =  "/products?" + urlencode({'SubcategoryName': item['subcategoryName']})
 
   return result
 
