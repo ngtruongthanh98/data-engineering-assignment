@@ -6,17 +6,27 @@
     <div class="body">
       <sub-category-list :title="title" :subCategoryList="subCategoryList" />
       <div class="main">
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
+        <div class="product-item-container">
+          <product-item />
+          <product-item />
+          <product-item />
+          <product-item />
+          <product-item />
 
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
+          <product-item />
+          <product-item />
+          <product-item />
+          <product-item />
+          <product-item />
+        </div>
+
+        <el-pagination
+          class="pagination-box"
+          small
+          layout="prev, pager, next"
+          :total="50"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -87,11 +97,17 @@ export default {
     }
 
     .main {
-      width: 80%;
-      display: grid;
-      grid-template-columns: repeat(5, 230px);
-      gap: 10px;
-      height: 80vh;
+      .product-item-container {
+        width: 80%;
+        display: grid;
+        grid-template-columns: repeat(5, 230px);
+        gap: 10px;
+        height: 80vh;
+      }
+
+      .pagination-box {
+        text-align: end;
+      }
     }
   }
 }
