@@ -18,6 +18,7 @@ const routes = [
     name: "home",
     component: HomePage,
   },
+  // Product
   {
     path: "/product",
     name: "product",
@@ -32,6 +33,12 @@ const routes = [
     path: "/transaction/:transactionId",
     name: "transactionDetail",
     component: TransactionDetailPage,
+  },
+  // Add new product
+  {
+    path: "/add-product",
+    name: "addProduct",
+    component: () => import("../views/products/AddNewProductPage"),
   },
 
   // ******************************

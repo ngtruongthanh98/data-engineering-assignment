@@ -14,3 +14,9 @@ export const getSubCategories = (queryParams) => {
   const url = "http://localhost:5000/subcategories";
   return axios.get(url, { params: queryParams });
 };
+
+// create new product
+export const createProduct = (product) => {
+  const url = "http://localhost:5000/product";
+  return axios.post(url, product);
+};

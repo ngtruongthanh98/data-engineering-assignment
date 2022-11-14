@@ -15,6 +15,13 @@
           <div class="title">{{ categoryItem.categoryName }}</div>
         </div>
       </div>
+
+      <!-- Button go to add product -->
+      <div class="add-product-button">
+        <el-button type="primary" @click="onHandleClickAddProduct">
+          Add new product
+        </el-button>
+      </div>
     </div>
 
     <copyright />
@@ -64,6 +71,9 @@ export default {
         this.$message(errorMessage);
       }
     },
+    onHandleClickAddProduct() {
+      this.$router.push("add-product");
+    },
   },
 };
 </script>
@@ -107,6 +117,10 @@ export default {
         .title {
         }
       }
+    }
+
+    .add-product-button {
+      margin-top: 24px;
     }
   }
 }

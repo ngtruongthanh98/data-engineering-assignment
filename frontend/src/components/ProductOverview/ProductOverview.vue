@@ -11,7 +11,7 @@
 
     <div class="product-overview-body">
       <div class="image-box">
-        <img :src="this.imageURL" alt="book" />
+        <img :src="this.imageURL" alt="book" width="500" height="500" />
       </div>
 
       <div class="product-overview-body-content">
