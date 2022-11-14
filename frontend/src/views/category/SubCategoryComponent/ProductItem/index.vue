@@ -51,7 +51,7 @@ export default {
     },
     productPrice: {
       type: String,
-      default: "$4.99",
+      default: "4.99",
     },
     productStar: {
       type: Number,
