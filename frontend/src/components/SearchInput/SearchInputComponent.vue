@@ -81,50 +81,31 @@ export default {
       console.log(item);
       this.$router.push(`${item.link}`);
     },
-    // loadAll() {
-    //   return [
-    //     { value: "vue", link: "https://github.com/vuejs/vue" },
-    //     { value: "element", link: "https://github.com/ElemeFE/element" },
-    //     { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
-    //     { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
-    //     { value: "vuex", link: "https://github.com/vuejs/vuex" },
-    //     { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
-    //     { value: "babel", link: "https://github.com/babel/babel" },
-    //   ];
-    // },
     async getProducts(queryParams) {
-      // const errorMessage = {
-      //   type: "error",
-      //   message: "Cannot fetch data",
-      // };
+      const errorMessage = {
+        type: "error",
+        message: "Cannot fetch data",
+      };
 
       try {
         const resp = await getProducts(queryParams);
-        let results = [
-          // { value: "vue", link: "https://github.com/vuejs/vue" },
-          // { value: "element", link: "https://github.com/ElemeFE/element" },
-          // { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
-          // { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
-          // { value: "vuex", link: "https://github.com/vuejs/vuex" },
-          // { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
-          // { value: "babel", link: "https://github.com/babel/babel" },
-        ];
+        let results = [];
 
         if (resp.data) {
-          if (!resp.data.productName) {
-            return;
-          }
-          results.push({
-            value: resp.data.productName,
-            link: "/product/" + resp.data.productName,
+          resp.data.data.forEach((item) => {
+            results.push({
+              value: item.productName,
+              link: "/product/" + item.productName,
+            });
           });
+
           console.log("results: ", results);
         }
 
         this.links = results;
       } catch (error) {
         console.log({ error });
-        // this.$message(errorMessage);
+        this.$message(errorMessage);
       }
     },
     boundedSearch() {
@@ -139,9 +120,7 @@ export default {
       }, 500);
     },
   },
-  mounted() {
-    // this.links = this.loadAll();
-  },
+  mounted() {},
   watch: {
     dataInput: function () {
       this.boundedSearch();
