@@ -4,29 +4,27 @@
     <h1 class="title">{{ title }}</h1>
 
     <div class="body">
-      <sub-category-list :title="title" :subCategoryList="subCategoryList" />
+      <sub-category-list
+        :title="title"
+        :subCategoryList="subCategoryList"
+        @select-subcategory="handleSelectSubCategory"
+      />
       <div class="main">
         <div class="product-item-container">
-          <product-item />
-          <product-item />
-          <product-item />
-          <product-item />
-          <product-item />
-
-          <product-item />
-          <product-item />
-          <product-item />
-          <product-item />
-          <product-item />
+          <product-item
+            v-for="(product, index) in productList"
+            :key="index"
+            :product-data-overview="product"
+          />
         </div>
 
-        <el-pagination
+        <!-- <el-pagination
           class="pagination-box"
           small
           layout="prev, pager, next"
           :total="50"
         >
-        </el-pagination>
+        </el-pagination> -->
       </div>
     </div>
   </div>
@@ -35,13 +33,13 @@
 <script>
 import SubCategoryList from "./SubCategoryList";
 import ProductItem from "./ProductItem";
-// import { getSubCategories } from "@/services/products";
+import { getProducts } from "@/services/products";
 
 export default {
   data() {
     return {
-      // title: "",
-      // subCategoryList: [],
+      productList: [],
+      SubcategoryName: "",
     };
   },
   props: {
@@ -58,25 +56,25 @@ export default {
     SubCategoryList,
     ProductItem,
   },
+  watch: {
+    SubcategoryName() {
+      this.getProducts();
+    },
+  },
   methods: {
-    // async getSubCategories() {
-    //   const queryParams = {
-    //     CategoryName: "Accessories",
-    //   };
-    //   const response = await getSubCategories(queryParams);
-    //   console.log("response: ", response);
-    //   // this.subCategoryList = response.data.data;
-    //   // map response.data.data
-    //   this.subCategoryList = response.data.data.map((item) => {
-    //     return {
-    //       subcategoryName: item.subcategoryName,
-    //     };
-    //   });
-    //   console.log("subCategoryList: ", this.subCategoryList);
-    // },
+    async getProducts() {
+      const queryParams = {
+        SubcategoryName: this.SubcategoryName || "Baby & Child Care",
+      };
+      const response = await getProducts(queryParams);
+      this.productList = response.data.data;
+    },
+    handleSelectSubCategory(SubcategoryName) {
+      this.SubcategoryName = SubcategoryName;
+    },
   },
   mounted() {
-    // this.getSubCategories("Accessories");
+    this.getProducts();
   },
 };
 </script>
@@ -107,6 +105,25 @@ export default {
 
       .pagination-box {
         text-align: end;
+        margin-top: 24px;
+        margin-right: 1rem;
+
+        .el-pager li.active {
+          color: $color-tertiary;
+        }
+
+        .el-pager li {
+          &:hover {
+            color: $color-tertiary;
+          }
+        }
+
+        .btn-prev,
+        .btn-next {
+          &:hover {
+            color: $color-tertiary;
+          }
+        }
       }
     }
   }

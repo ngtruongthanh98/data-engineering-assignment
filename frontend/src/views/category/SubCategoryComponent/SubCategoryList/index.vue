@@ -12,7 +12,12 @@
     <div
       v-for="(item, index) in subCategoryList"
       :key="index"
-      class="sub-category-item"
+      :class="
+        item.subcategoryName === selectedSubCategory
+          ? 'sub-category-item selected'
+          : 'sub-category-item'
+      "
+      @click="selectSubCategory(item.subcategoryName)"
     >
       {{ item.subcategoryName }}
     </div>
@@ -21,6 +26,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selectedSubCategory: this.subCategoryList[0]?.subcategoryName,
+    };
+  },
   props: {
     title: {
       type: String,
@@ -30,6 +40,15 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+  methods: {
+    selectSubCategory(subCategoryName) {
+      this.selectedSubCategory = subCategoryName;
+      this.$emit("select-subcategory", subCategoryName);
+    },
+  },
+  mounted() {
+    console.log("selectedSubCategory: ", this.selectedSubCategory);
   },
 };
 </script>
@@ -59,6 +78,10 @@ export default {
     &:hover {
       color: $color-primary;
       cursor: pointer;
+    }
+
+    &.selected {
+      color: $color-primary;
     }
   }
 }

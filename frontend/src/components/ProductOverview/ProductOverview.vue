@@ -163,7 +163,7 @@ export default {
       default: "49.99",
     },
     quantity: {
-      type: Number || String,
+      type: String,
       default: "5000",
     },
     productStyle: {

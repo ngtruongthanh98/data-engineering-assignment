@@ -115,8 +115,8 @@ export default {
       default: "Unknown",
     },
     quantity: {
-      type: Number || String,
-      default: 1499,
+      type: String,
+      default: "1499",
     },
     weight: {
       type: Number,

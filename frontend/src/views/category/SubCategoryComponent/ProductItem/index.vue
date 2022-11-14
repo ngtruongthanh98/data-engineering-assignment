@@ -10,14 +10,20 @@
     />
 
     <div class="product-name">
-      {{ productName }}
+      {{ productDataOverview.productName }}
     </div>
-    <div class="product-id">Id: {{ productId }}</div>
-    <div class="product-price">{{ productPrice }}</div>
+    <div class="product-id">
+      Id: {{ productDataOverview.productID || productId }}
+    </div>
+    <div class="product-price">
+      ${{ productDataOverview.partnerItemMonthlyCost || productPrice }}
+    </div>
     <div class="product-star">
       <el-rate v-model="overviewStar" :max="5"></el-rate>
     </div>
-    <div class="product-quantity">Quantity: {{ productQuantity }}</div>
+    <div class="product-quantity">
+      Quantity: {{ productDataOverview.partnerItemQty || productQuantity }}
+    </div>
     <div class="product-location">{{ productLocation }}</div>
   </div>
 </template>
@@ -59,14 +65,14 @@ export default {
       type: String,
       default: "Hanoi",
     },
+    productDataOverview: {
+      type: Object,
+      default: () => {},
+    },
   },
   methods: {
     onClickProductItem() {
-      const product = {
-        productName: "Books",
-      };
-
-      this.$router.push(`/product/${product.productName}`);
+      this.$router.push(`/product/${this.productDataOverview.productName}`);
     },
   },
 };

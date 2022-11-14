@@ -37,7 +37,7 @@ const routes = [
   // ******************************
   // Category
   {
-    path: "/:categoryName",
+    path: "/product/category/:categoryName",
     name: "category",
     component: Category,
   },

@@ -40,7 +40,7 @@ export default {
     },
   },
   mounted() {
-    this.categoryName = decodeURIComponent(this.$route.path.split("/")[1]);
+    this.categoryName = decodeURIComponent(this.$route.path.split("/")[3]);
     this.getSubCategories(this.categoryName);
   },
 };
