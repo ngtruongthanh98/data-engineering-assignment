@@ -1,16 +1,19 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Bar
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div class="chart-component">
+    <Bar
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+    />
+    <div class="chart-name">{{ title }}</div>
+  </div>
 </template>
 
 <script>
@@ -74,6 +77,10 @@ export default {
     //   type: Array,
     //   default: () => [],
     // },
+    title: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
@@ -111,5 +118,12 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.chart-component {
+  .chart-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+}
 </style>

@@ -1,17 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Pie
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-    :title="title"
-  />
+  <div class="chart-component">
+    <Pie
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+      :title="title"
+    />
+
+    <div class="chart-name">{{ title }}</div>
+  </div>
 </template>
 
 <script>
@@ -106,3 +110,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.chart-component {
+  .chart-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+}
+</style>

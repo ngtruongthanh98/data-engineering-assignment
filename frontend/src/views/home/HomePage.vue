@@ -4,7 +4,11 @@
 
     <div class="home-page-body">
       <div class="row">
-        <bar-chart class="bar-chart-1" :labels="labelArray" />
+        <bar-chart
+          class="bar-chart-1"
+          :labels="labelArray"
+          title="Table Size Bytes"
+        />
         <pie-chart
           class="pie-chart-1"
           :labels="labelArray"
