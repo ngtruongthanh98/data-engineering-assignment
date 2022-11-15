@@ -113,6 +113,11 @@ def create_new_product():
   new_item["ProductID"] = {'N': f"{randint(0, 100000)}"}
   return dynamodb.put_item(TableName="Product", Item=new_item)
 
+@app.route('/overview/<table>', methods=['GET'])
+def get_overview(table):
+  table = table[0].upper() + table[1:]
+  return dynamodb.describe_table(TableName=table)
+
 def query_in_list(dynamodb_list: list, attribute_to_query: str):
   unique_dynamodb_list = remove_reports_duplicate(dynamodb_list)
   filter_expression = ''
