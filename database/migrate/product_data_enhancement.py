@@ -186,48 +186,50 @@ subcategories = mysql_cursor.fetchall()
 subcategories = [sc[0] for sc in subcategories]
 
 '''MSSQL PROCESSING'''
-for row in mssql_cursor.fetchall():
-    index = {
-      "PutRequest": {
-        "Item": {}
+for loop in range(1,3):
+  for row in mssql_cursor.fetchall():
+      index = {
+        "PutRequest": {
+          "Item": {}
+        }
       }
-    }
-    # Add custom column here
-    for i, column in enumerate(mssql_columns):
-      if column == 'Name':
-        index["PutRequest"]["Item"]["ProductName"] = {"S": str(row[i])}
-      if column == 'SubcategoryName' and row[i] is None:
-        index["PutRequest"]["Item"][column] = {'S': random.choice(subcategories)}
-        
-      elif row[i] is not None:
-        if isinstance(row[i], bool):
-          index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
-        elif isinstance(row[i], (int, float)):
-          index["PutRequest"]["Item"][column] = {"N": f"{row[i]}"}
-        else:
-          index["PutRequest"]["Item"][column] = {"S": str(row[i])}
-    items.append(index)
+      # Add custom column here
+      for i, column in enumerate(mssql_columns):
+        if column == 'Name':
+          index["PutRequest"]["Item"]["ProductName"] = {"S": str(row[i]) + str(loop)}
+        if column == 'SubcategoryName' and row[i] is None:
+          index["PutRequest"]["Item"][column] = {'S': random.choice(subcategories)}
+          
+        elif row[i] is not None:
+          if isinstance(row[i], bool):
+            index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
+          elif isinstance(row[i], (int, float)):
+            index["PutRequest"]["Item"][column] = {"N": f"{row[i]}"}
+          else:
+            index["PutRequest"]["Item"][column] = {"S": str(row[i])}
+      items.append(index)
 
-'''END OF MSSQL'''
-for row in products_data:
-    index = {
-      "PutRequest": {
-        "Item": {}
+  '''END OF MSSQL'''
+  for row in products_data:
+      index = {
+        "PutRequest": {
+          "Item": {}
+        }
       }
-    }
-    # Add custom column here
-    for i, column in enumerate(product_columns):
-      if column == 'SubcategoryName' and row[i] is None:
-        index["PutRequest"]["Item"][column] = {'S': random.choice(subcategories)}
+      # Add custom column here
+      for i, column in enumerate(product_columns):
+        if column == 'SubcategoryName' and row[i] is None:
+          index["PutRequest"]["Item"][column] = {'S': random.choice(subcategories)}
 
-      if row[i] is not None:
-        if isinstance(row[i], bool):
-          index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
-        elif isinstance(row[i], (int, float)):
-          index["PutRequest"]["Item"][column] = {"N": f"{row[i]}"}
-        else:
-          index["PutRequest"]["Item"][column] = {"S": re.sub(re.compile('<.*?>'), '', str(row[i]))}
-    items.append(index)
+        if row[i] is not None:
+          if isinstance(row[i], bool):
+            index["PutRequest"]["Item"][column] = {"BOOL": row[i]}
+          elif isinstance(row[i], (int, float)):
+            index["PutRequest"]["Item"][column] = {"N": f"{row[i]}"}
+          else:
+            index["PutRequest"]["Item"][column] = {"S": re.sub(re.compile('<.*?>'), '', str(row[i]))}
+      index["PutRequest"]["Item"]["ProductName"]["S"] = index["PutRequest"]["Item"]["ProductName"]["S"] + str(loop)
+      items.append(index)
 
 logf = open("logger.log", "w")
 
