@@ -10,6 +10,7 @@
     :styles="styles"
     :width="width"
     :height="height"
+    :title="title"
   />
 </template>
 
@@ -61,15 +62,31 @@ export default {
       type: Array,
       default: () => [],
     },
+    labels: {
+      type: Array,
+      default: () => [],
+    },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    title: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
       chartData: {
-        labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
+        // labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
+        labels: this.labels,
         datasets: [
           {
             backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-            data: [40, 20, 80, 10],
+            // data: [40, 20, 80, 10],
+
+            // data: [189166902, 12218562, 146171],
+            data: [31217, 317, 21002],
           },
         ],
       },
@@ -78,6 +95,14 @@ export default {
         maintainAspectRatio: false,
       },
     };
+  },
+  computed: {
+    itemCountPercentArray: function () {
+      // total value of elements in data array
+      const total = this.data.reduce((a, b) => a + b, 0);
+      // find percent in total of each item in data array
+      return this.data.map((item) => (item / total) * 100);
+    },
   },
 };
 </script>
