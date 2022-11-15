@@ -6,14 +6,21 @@
     <div class="product-page-body">
       <div class="category-container">
         <div
-          v-for="(categoryItem, index) in categoryList"
+          v-for="(categoryItem, index) in productCategories"
           :key="index"
           class="category-item"
-          @click="onHandleClick(categoryItem.link)"
+          @click="onHandleClick(categoryItem.categoryName)"
         >
-          <img :src="categoryItem.image" alt="" class="image" />
-          <div class="title">{{ categoryItem.title }}</div>
+          <img src="@/assets/No_Image_Available.jpg" alt="" class="image" />
+          <div class="title">{{ categoryItem.categoryName }}</div>
         </div>
+      </div>
+
+      <!-- Button go to add product -->
+      <div class="add-product-button">
+        <el-button type="primary" @click="onHandleClickAddProduct">
+          Add new product
+        </el-button>
       </div>
     </div>
 
@@ -24,14 +31,13 @@
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent";
 import Copyright from "@/components/Copyright";
-import { categoryList } from "@/constants";
-import { getProducts } from "@/services/products";
+import { getCategories } from "@/services/products";
 
 export default {
   name: "ProductPage",
   data: function () {
     return {
-      categoryList,
+      productCategories: [],
     };
   },
   components: {
@@ -39,28 +45,34 @@ export default {
     Copyright,
   },
   mounted() {
-    this.getProducts();
+    this.getCategories();
   },
   methods: {
     onHandleClick(link) {
-      this.$router.push(`/${link}`);
+      this.$router.push(`product/category/${link}`);
     },
-    async getProducts() {
+    async getCategories() {
       const errorMessage = {
         type: "error",
         message: "Cannot fetch data",
       };
 
       try {
-        const resp = await getProducts();
-        const { status, code } = resp;
+        const resp = await getCategories();
+        const { status } = resp;
 
         console.log("status: ", status);
-        console.log("code: ", code);
+
+        this.productCategories = resp.data.data;
+
+        console.log("productCategories: ", this.productCategories);
       } catch (error) {
         console.log({ error });
         this.$message(errorMessage);
       }
+    },
+    onHandleClickAddProduct() {
+      this.$router.push("add-product");
     },
   },
 };
@@ -105,6 +117,10 @@ export default {
         .title {
         }
       }
+    }
+
+    .add-product-button {
+      margin-top: 24px;
     }
   }
 }

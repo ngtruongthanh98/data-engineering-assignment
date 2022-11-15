@@ -1,6 +1,6 @@
 <template>
   <el-row class="header-component">
-    <el-col :span="8" class="navbar__logo-box">
+    <el-col :span="6" class="navbar__logo-box">
       <img
         src="@/assets/aws_logo.png"
         alt=""
@@ -8,10 +8,10 @@
         @click="onClickLogo"
       />
     </el-col>
-    <el-col v-if="isShowSearchBar" :span="8" class="navbar_search-box">
+    <el-col v-if="isShowSearchBar" :span="12" class="navbar_search-box">
       <search-input-component />
     </el-col>
-    <el-col :span="8" class="navbar__menu-box">
+    <el-col :span="6" class="navbar__menu-box">
       <ul class="el-menu el-menu--horizontal navbar__menu">
         <li class="el-menu-item">
           <router-link to="/">Home</router-link>

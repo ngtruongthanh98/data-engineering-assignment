@@ -3,38 +3,35 @@
     <div class="path">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">Homepage</el-breadcrumb-item>
-        <el-breadcrumb-item>Category</el-breadcrumb-item>
-        <el-breadcrumb-item>Sub Category</el-breadcrumb-item>
-        <el-breadcrumb-item>Product</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ categoryName }}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ subCategoryName }}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ productName }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
 
     <div class="product-overview-body">
       <div class="image-box">
-        <img
-          src="https://media.wiley.com/product_data/coverImage300/82/15095467/1509546782.jpg"
-          alt="book"
-        />
+        <img :src="this.imageURL" alt="book" width="500" height="500" />
       </div>
 
       <div class="product-overview-body-content">
         <div class="product-name">
           <div class="title">
-            <span class="category">Category</span>
+            <span class="category">{{ categoryName }}</span>
             <span> - </span>
-            <span class="content">Book Wars</span>
+            <span class="content">{{ productName }}</span>
             <span> - </span>
-            <span>Nha san xuat</span>
+            <span>{{ producer }}</span>
           </div>
         </div>
         <div class="product-id">
           <div class="title">
-            Product ID: <span class="content">BOOKGG67GD74H</span>
+            Product ID: <span class="content">{{ productNumber }}</span>
           </div>
         </div>
         <div class="rating-box">
           <div class="rating">
-            <div class="title">4.9</div>
+            <div class="title">{{ rating }}</div>
             <el-rate v-model="ratingValue" :max="5"></el-rate>
           </div>
         </div>
@@ -42,7 +39,7 @@
         <div class="price-box">
           <div class="price">
             <div class="title">
-              <span class="content">$49.99</span>
+              <span class="content">${{ price }}</span>
             </div>
           </div>
         </div>
@@ -52,11 +49,14 @@
             <div class="col">Color</div>
             <div class="col">
               <div class="item-group">
-                <item-tag
-                  v-for="(color, index) in colorList"
-                  :key="index"
-                  :content="color"
-                />
+                <div v-if="colorList.length > 0">
+                  <item-tag
+                    v-for="(color, index) in colorList"
+                    :key="index"
+                    :content="color"
+                  />
+                </div>
+                <div v-else>Unknown</div>
               </div>
             </div>
           </div>
@@ -65,43 +65,46 @@
             <div class="col">Size</div>
             <div class="col">
               <div class="item-group">
-                <item-tag
-                  v-for="(size, index) in sizeList"
-                  :key="index"
-                  :content="size"
-                />
+                <div v-if="sizeList.length > 0">
+                  <item-tag
+                    v-for="(size, index) in sizeList"
+                    :key="index"
+                    :content="size"
+                  />
+                </div>
+                <div v-else>Unknown</div>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col">Style</div>
-            <div class="col">Unknown</div>
+            <div class="col">{{ productStyle }}</div>
           </div>
 
           <div class="row">
             <div class="col">Quantity</div>
-            <div class="col">5000</div>
+            <div class="col">{{ quantity }}</div>
           </div>
 
           <div class="row">
             <div class="col">Sell Start Date</div>
-            <div class="col">14/5/2014</div>
+            <div class="col">{{ sellStartDate }}</div>
           </div>
 
           <div class="row">
             <div class="col">Sell Start End</div>
-            <div class="col">None</div>
+            <div class="col">{{ sellEndDate }}</div>
           </div>
 
-          <div class="button-row">
+          <!-- <div class="button-row">
             <el-button
               type="primary"
               class="direction-btn"
               @click="onClickTransactionDetail"
               >Transactions</el-button
             >
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -115,24 +118,85 @@ export default {
   data: function () {
     return {
       ratingValue: 4.9,
-      colorList: ["Red", "Blue", "Yellow", "Green"],
-      sizeList: ["XS", "S", "M", "L", "XL"],
+      // colorList: ["Red", "Blue", "Yellow", "Green"],
+      // sizeList: ["XS", "S", "M", "L", "XL"],
     };
   },
   components: {
     ItemTag,
   },
-  methods: {
-    onClickTransactionDetail() {
-      console.log("Clicked");
-
-      const transaction = {
-        id: 2424,
-      };
-
-      this.$router.push(`/transaction/${transaction.id}`);
+  props: {
+    productName: {
+      type: String,
+      default: "Product Name",
+    },
+    imageURL: {
+      type: String,
+      default: "./assets/No_Image_Available.jpg",
+    },
+    productNumber: {
+      type: String,
+      default: "BOOKGG67GD74H",
+    },
+    categoryName: {
+      type: String,
+      default: "Category",
+    },
+    subCategoryName: {
+      type: String,
+      default: "Sub Category",
+    },
+    sellStartDate: {
+      type: String,
+      default: "14/5/2014",
+    },
+    sellEndDate: {
+      type: String,
+      default: "None",
+    },
+    producer: {
+      type: String,
+      default: "Nha san xuat",
+    },
+    price: {
+      type: String,
+      default: "49.99",
+    },
+    quantity: {
+      type: String,
+      default: "5000",
+    },
+    productStyle: {
+      type: String,
+      default: "Unknown",
+    },
+    sizeList: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
+    colorList: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
+    rating: {
+      type: Number,
+      default: 4.9,
     },
   },
+  methods: {
+    onClickTransactionDetail() {
+      const transaction = {
+        productName: "Books",
+      };
+
+      this.$router.push(`/transaction/${transaction.productName}`);
+    },
+  },
+  mounted() {},
 };
 </script>
 
@@ -199,7 +263,6 @@ export default {
           display: grid;
           grid-template-columns: 200px 5fr;
           align-items: center;
-          width: 300px;
           padding: 12px 0;
 
           .col {

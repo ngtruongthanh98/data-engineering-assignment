@@ -1,7 +1,22 @@
 import axios from "axios";
 
-export const getProducts = () => {
-  // ! Change API for testing
-  const url = "http://localhost:5000/games";
+export const getProducts = (queryParams) => {
+  const url = "http://localhost:5000/products";
+  return axios.get(url, { params: queryParams });
+};
+
+export const getCategories = () => {
+  const url = "http://localhost:5000/categories";
   return axios.get(url);
+};
+
+export const getSubCategories = (queryParams) => {
+  const url = "http://localhost:5000/subcategories";
+  return axios.get(url, { params: queryParams });
+};
+
+// create new product
+export const createProduct = (product) => {
+  const url = "http://localhost:5000/product";
+  return axios.post(url, product);
 };
