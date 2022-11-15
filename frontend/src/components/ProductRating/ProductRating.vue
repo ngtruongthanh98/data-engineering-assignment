@@ -21,7 +21,7 @@
 
       <div class="comment-box">
         <div
-          v-for="(usersDataItem, index) in usersData"
+          v-for="(commentDataItem, index) in commentData"
           :key="index"
           class="comment-box-item"
         >
@@ -29,13 +29,13 @@
 
           <div class="comment-information">
             <div class="reviewer-name">
-              {{ usersDataItem.reviewerName }}
-              <span class="email">({{ usersDataItem.emailAddress }})</span>
+              {{ commentDataItem.name }}
+              <span class="email">({{ commentDataItem.email }})</span>
             </div>
-            <el-rate v-model="overviewStar" :max="5"></el-rate>
-            <div class="review-date">{{ usersDataItem.reviewerData }}</div>
+            <!-- <el-rate v-model="commentDataItem.overall_score" :max="5"></el-rate> -->
+            <div class="review-date">{{ commentDataItem.reviewDate }}</div>
             <div class="comment">
-              {{ usersDataItem.comment }}
+              {{ commentDataItem.comment }}
             </div>
           </div>
         </div>
@@ -55,6 +55,8 @@
 <script>
 import UserAvatar from "@/components/UserAvatar/UserAvatar";
 import ItemTag from "@/components/ItemTag/ItemTag";
+import { getComments } from "@/services/comments";
+
 export default {
   data() {
     return {
@@ -95,11 +97,36 @@ export default {
         },
       ],
       starTagData: ["All", "5 Star", "4 Star", "3 Star", "2 Star", "1 Star"],
+      commentData: [],
     };
   },
   components: {
     UserAvatar,
     ItemTag,
+  },
+  props: {
+    rating: {
+      type: Number,
+      default: 0,
+    },
+  },
+  methods: {
+    async getComments() {
+      const queryParams = {
+        productName: this.productName,
+      };
+
+      const response = await getComments(queryParams);
+
+      this.commentData = response.data;
+      console.log(this.commentData);
+    },
+  },
+  mounted() {
+    const productName = this.$route.path.split("/")[2];
+    this.productName = productName;
+
+    this.getComments();
   },
 };
 </script>

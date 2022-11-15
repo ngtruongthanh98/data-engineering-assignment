@@ -33,7 +33,7 @@
       :status="this.productData.status"
       :documnentSummary="this.productData.identityItemDescription"
     />
-    <product-rating />
+    <product-rating :rating="this.productData.rating" />
     <copyright />
   </div>
 </template>
@@ -77,8 +77,6 @@ export default {
   },
   mounted() {
     const productName = this.$route.path.split("/")[2];
-
-    console.log("productName: ", productName);
 
     const queryParams = {
       ProductName: productName,
