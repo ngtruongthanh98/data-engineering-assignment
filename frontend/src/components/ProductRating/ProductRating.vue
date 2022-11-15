@@ -32,7 +32,7 @@
               {{ commentDataItem.name }}
               <span class="email">({{ commentDataItem.email }})</span>
             </div>
-            <!-- <el-rate v-model="commentDataItem.overall_score" :max="5"></el-rate> -->
+            <el-rate v-model="commentDataItem.overall_score" :max="5"></el-rate>
             <div class="review-date">{{ commentDataItem.reviewDate }}</div>
             <div class="comment">
               {{ commentDataItem.comment }}
@@ -118,8 +118,7 @@ export default {
 
       const response = await getComments(queryParams);
 
-      this.commentData = response.data;
-      console.log(this.commentData);
+      this.commentData = response.data.data;
     },
   },
   mounted() {
