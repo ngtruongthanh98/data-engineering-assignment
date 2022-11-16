@@ -1,16 +1,19 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Bar
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div class="chart-component">
+    <Bar
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+    />
+    <div class="chart-name">{{ title }}</div>
+  </div>
 </template>
 
 <script>
@@ -66,29 +69,43 @@ export default {
       type: Object,
       default: () => {},
     },
+    labels: {
+      type: Array,
+      default: () => [],
+    },
+    // data: {
+    //   type: Array,
+    //   default: () => [],
+    // },
+    title: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
       chartData: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ],
+        // labels: [
+        //   "January",
+        //   "February",
+        //   "March",
+        //   "April",
+        //   "May",
+        //   "June",
+        //   "July",
+        //   "August",
+        //   "September",
+        //   "October",
+        //   "November",
+        //   "December",
+        // ],
+        labels: this.labels,
         datasets: [
           {
             label: "Data One",
             backgroundColor: "#f87979",
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11],
+            data: [189166902, 146171, 12218562],
+            // data: this.data,
           },
         ],
       },
@@ -101,5 +118,12 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.chart-component {
+  .chart-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+}
 </style>

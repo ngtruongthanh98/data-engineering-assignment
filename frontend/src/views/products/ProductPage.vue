@@ -64,8 +64,6 @@ export default {
         console.log("status: ", status);
 
         this.productCategories = resp.data.data;
-
-        console.log("productCategories: ", this.productCategories);
       } catch (error) {
         console.log({ error });
         this.$message(errorMessage);

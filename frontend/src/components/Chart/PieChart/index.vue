@@ -1,16 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Pie
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div class="chart-component">
+    <Pie
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+      :title="title"
+    />
+
+    <div class="chart-name">{{ title }}</div>
+  </div>
 </template>
 
 <script>
@@ -61,15 +66,31 @@ export default {
       type: Array,
       default: () => [],
     },
+    labels: {
+      type: Array,
+      default: () => [],
+    },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    title: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
       chartData: {
-        labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
+        // labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
+        labels: this.labels,
         datasets: [
           {
             backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-            data: [40, 20, 80, 10],
+            // data: [40, 20, 80, 10],
+
+            // data: [189166902, 12218562, 146171],
+            data: [31217, 317, 21002],
           },
         ],
       },
@@ -79,5 +100,23 @@ export default {
       },
     };
   },
+  computed: {
+    itemCountPercentArray: function () {
+      // total value of elements in data array
+      const total = this.data.reduce((a, b) => a + b, 0);
+      // find percent in total of each item in data array
+      return this.data.map((item) => (item / total) * 100);
+    },
+  },
 };
 </script>
+
+<style lang="scss">
+.chart-component {
+  .chart-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+}
+</style>
