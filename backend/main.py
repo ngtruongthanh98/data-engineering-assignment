@@ -3,7 +3,8 @@ from flask_cors import CORS
 import boto3
 import json
 from urllib.parse import urlencode
-from random import randint
+import random
+import json
 
 app = Flask(__name__)
 
@@ -99,6 +100,11 @@ def get_subcategories():
 
 @app.route('/product', methods=['POST'])
 def create_new_product():
+  product_names = dynamodb.scan(TableName="Product",
+    ProjectionExpression="ProductName",
+  )
+  product_names = [pn["ProductName"]["S"] for pn in product_names["Items"]]
+
   body = request.json
   new_item = {}
   for key, value in body.items():
@@ -109,8 +115,8 @@ def create_new_product():
       new_item[key] = {"N": f"{value}"}
     else:
       new_item[key] = {"S": str(value)}
-
-  new_item["ProductID"] = {'N': f"{randint(0, 100000)}"}
+  new_item["PartnerItemPackageItemIds"] = {'S': json.dumps(random.sample(product_names, 4))}
+  new_item["ProductID"] = {'N': f"{random.randint(0, 100000)}"}
   return dynamodb.put_item(TableName="Product", Item=new_item)
 
 @app.route('/overview/<table>', methods=['GET'])

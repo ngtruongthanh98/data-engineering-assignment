@@ -34,6 +34,27 @@
       :documnentSummary="this.productData.identityItemDescription"
     />
     <product-rating :rating="this.productData.rating" />
+    
+    <div class="product-similar">
+      <div class="product-similar-header">
+        Maybe you like
+      </div>
+      <div class="product-similar-body">
+        <product-item
+          v-for="(product, index) in similarProduct"
+          :key="index"
+          :product-data-overview="product"
+        />
+      </div>
+    </div>
+
+      <!-- <el-pagination
+        class="pagination-box"
+        small
+        layout="prev, pager, next"
+        :total="50"
+      >
+      </el-pagination> -->
     <copyright />
   </div>
 </template>
@@ -44,6 +65,7 @@ import ProductOverview from "@/components/ProductOverview/ProductOverview";
 import ProductDetail from "@/components/ProductDetail/ProductDetail";
 import ProductRating from "@/components/ProductRating/ProductRating";
 import Copyright from "@/components/Copyright";
+import ProductItem from "@/views/category/SubCategoryComponent/ProductItem/index";
 
 import { getProducts } from "@/services/products";
 
@@ -52,6 +74,7 @@ export default {
   data() {
     return {
       productData: {},
+      similarProduct: [],
       noDataImage: require("@/assets/No_Image_Available.jpg"),
     };
   },
@@ -60,6 +83,7 @@ export default {
     ProductOverview,
     ProductDetail,
     ProductRating,
+    ProductItem,
     Copyright,
   },
   methods: {
@@ -68,8 +92,9 @@ export default {
         const resp = await getProducts(queryParams);
 
         this.productData = resp.data.data[0] || resp.data.data;
-
-        console.log("productData: ", this.productData);
+        const similarProductNames = JSON.parse(this.productData.partnerItemPackageItemIds)
+        this.similarProduct = await Promise.all(similarProductNames.map(async sp => (await getProducts({ProductName: sp})).data.data[0]))
+        console.log("productData: ", this.similarProduct);
       } catch (error) {
         console.log(error);
       }
@@ -91,4 +116,27 @@ export default {
 .product-detail-page {
   background-color: $color-gray;
 }
+
+.product-similar {
+  &-header {
+    background-color: $color-white;
+    text-align: start;
+    padding: 24px;
+    font-weight: bold;
+  }
+  padding: 24px 200px 0px 200px;
+  &-body {
+    padding: 24px;
+    background-color: $color-white;
+    display: flex;
+    align-items: flex-start
+
+    // .title {
+    //   font-size: 18px;
+    //   padding: 24px;
+    //   text-align: start;
+    // }
+  }
+}
+
 </style>
