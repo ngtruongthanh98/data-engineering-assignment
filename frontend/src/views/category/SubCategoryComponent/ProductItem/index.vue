@@ -72,7 +72,12 @@ export default {
   },
   methods: {
     onClickProductItem() {
-      this.$router.push(`/product/${this.productDataOverview.productName}`);
+      const path = `/product/${this.productDataOverview.productName}`;
+      if (this.$route.path !== path) {
+        this.$router.push(path);
+
+        window.location.reload();
+      }
     },
   },
 };

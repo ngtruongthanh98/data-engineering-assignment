@@ -150,6 +150,16 @@ export default {
       };
 
       this.createProduct(queryParams);
+
+      // clear input
+      this.inputProductName = "";
+      this.inputProductId = "";
+      this.inputProductCategory = "";
+      this.inputProductSubcategory = "";
+      this.inputProductPrice = "";
+      this.inputProductImageUrl = "";
+      this.inputProductBrand = "";
+      this.inputRating = "";
     },
   },
 };

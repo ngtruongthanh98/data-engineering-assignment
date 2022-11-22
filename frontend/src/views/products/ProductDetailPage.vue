@@ -34,11 +34,9 @@
       :documnentSummary="this.productData.identityItemDescription"
     />
     <product-rating :rating="this.productData.rating" />
-    
-    <div class="product-similar">
-      <div class="product-similar-header">
-        Maybe you like
-      </div>
+
+    <div v-if="similarProduct.length > 0" class="product-similar">
+      <div class="product-similar-header">Maybe you like</div>
       <div class="product-similar-body">
         <product-item
           v-for="(product, index) in similarProduct"
@@ -48,7 +46,7 @@
       </div>
     </div>
 
-      <!-- <el-pagination
+    <!-- <el-pagination
         class="pagination-box"
         small
         layout="prev, pager, next"
@@ -92,19 +90,33 @@ export default {
         const resp = await getProducts(queryParams);
 
         this.productData = resp.data.data[0] || resp.data.data;
-        const similarProductNames = JSON.parse(this.productData.partnerItemPackageItemIds)
-        this.similarProduct = await Promise.all(similarProductNames.map(async sp => (await getProducts({ProductName: sp})).data.data[0]))
+        const similarProductNames = JSON.parse(
+          this.productData.partnerItemPackageItemIds
+        );
+        this.similarProduct = await Promise.all(
+          similarProductNames.map(
+            async (sp) => (await getProducts({ ProductName: sp })).data.data[0]
+          )
+        );
         console.log("productData: ", this.similarProduct);
       } catch (error) {
         console.log(error);
       }
     },
   },
+  watch: {
+    $route() {
+      const queryParams = {
+        ProductName: this.$route.params.productName,
+      };
+      this.getProductDetail(queryParams);
+    },
+  },
   mounted() {
     const productName = this.$route.path.split("/")[2];
 
     const queryParams = {
-      ProductName: productName,
+      ProductName: productName.replace(/%20/g, " "),
     };
 
     this.getProductDetail(queryParams);
@@ -129,7 +141,7 @@ export default {
     padding: 24px;
     background-color: $color-white;
     display: flex;
-    align-items: flex-start
+    align-items: flex-start;
 
     // .title {
     //   font-size: 18px;
@@ -138,5 +150,4 @@ export default {
     // }
   }
 }
-
 </style>
